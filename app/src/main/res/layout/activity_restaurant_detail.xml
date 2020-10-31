@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RestaurantDetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/image_view_logo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+        <RelativeLayout
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:layout_marginEnd="25dp"
+                android:id="@+id/auto_complete_text_view"
+                android:textSize="15sp"
+                android:padding="8dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/custom_edit_text_search"
+                android:layout_toStartOf="@id/image_view_evaluate"
+                android:drawableStart="@drawable/icon_search"
+                android:hint="@string/search_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/image_badge_view_shopping_cart"
+                android:id="@+id/image_view_evaluate"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+<!--            <com.nex3z.notificationbadge.NotificationBadge-->
+<!--                app:nbBackground="@drawable/ic_baseline_shopping_cart"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:id="@+id/badge"-->
+<!--                android:layout_width="28dp"-->
+<!--                android:layout_height="28dp"-->
+<!--                app:nbMaxTextLength="2"/>-->
+
+            <ru.nikartm.support.ImageBadgeView
+                android:id="@+id/image_badge_view_shopping_cart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_shopping_cart"
+                app:ibv_badgeColor="#00ACC1"
+                app:ibv_badgeLimitValue="false"
+                app:ibv_badgePosition="top_right"
+                app:ibv_badgeTextColor="#ffffff"
+                app:ibv_badgeTextSize="8sp"
+                app:ibv_fixedBadgeRadius="15dp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <include layout="@layout/layout_bottomsheet" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

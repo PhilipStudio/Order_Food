@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:padding="10dp"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/item_food_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/item_food_name"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="10dp"
+            android:text="@string/food_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:id="@+id/item_food_price"
+                android:textColor="@android:color/black"
+                android:text="@string/price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                app:finalNumber="20"
+                app:initialNumber="1"
+                android:id="@+id/item_number_button"
+                android:background="@drawable/custom_button_add"
+                android:src="@drawable/ic_baseline_add"
+                android:layout_gravity="end"
+                android:layout_width="100dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

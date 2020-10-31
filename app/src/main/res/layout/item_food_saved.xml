@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/item_image_food"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"/>
+
+        <TextView
+            android:drawablePadding="5dp"
+            android:textSize="12sp"
+            android:id="@+id/item_number_favorite"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="#EFBB1E"
+            android:text="@string/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/ic_baseline_thumb_up" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/item_name_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Trà sen vàng"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:drawablePadding="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="end"
+            android:id="@+id/item_name_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/name_restaurant"
+            app:drawableStartCompat="@drawable/ic_baseline_storefront"
+            tools:ignore="RtlCompat" />
+
+        <RelativeLayout
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@android:color/black"
+                android:id="@+id/item_food_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price" />
+
+            <ImageView
+                android:id="@+id/item_add"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_baseline_add_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleMarginStart="80dp"
+        android:background="@android:color/white"
+        app:title="Tạo địa chỉ"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_margin="10dp"
+        android:text="Địa chỉ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios"
+        android:textStyle="bold"
+        android:background="@android:color/white"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:text="Chọn địa chỉ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:background="@android:color/white"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:text="Tòa nhà, số tầng (không bắt buộc)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:background="@android:color/white"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:text="Số tầng (không bắt buộc)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textSize="16sp"
+        android:layout_margin="10dp"
+        android:text="Tên địa chỉ (không bắt buộc)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_house"
+            android:textAllCaps="false"
+            android:text="Nhà"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/button_company"
+            android:textAllCaps="false"
+            android:text="Công ty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/button_other"
+            android:textAllCaps="false"
+            android:text="Khác"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_margin="10dp"
+        android:text="Liên hệ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:text="@string/me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:text="@string/_0385035105"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/white"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/custom_button"
+        android:text="@string/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

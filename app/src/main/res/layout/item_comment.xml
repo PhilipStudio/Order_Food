@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@android:color/white"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.github.abdularis.civ.AvatarImageView
+        android:id="@+id/item_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_baseline_account_circle"
+        app:strokeWidth="1dp"
+        app:strokeColor="@android:color/white"
+        app:avatarBackgroundColor="@color/colorPrimaryDark"
+        app:text="A"
+        app:textSize="22sp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/item_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/item_nickname"
+                android:textColor="@android:color/black"
+                android:text="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/item_time"
+                android:layout_alignParentEnd="true"
+                android:text="@string/date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <com.willy.ratingbar.ScaleRatingBar
+            android:layout_marginStart="10dp"
+            android:id="@+id/item_base_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srb_numStars="5"
+            app:srb_minimumStars="1"
+            app:srb_starWidth="10dp"
+            app:srb_starHeight="10dp"
+            app:srb_stepSize="1"
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"/>
+
+
+        <TextView
+            android:id="@+id/item_content_comment"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/colorBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#FF5722</color>
+    <color name="colorAccent">#39796b</color>
+    <color name="colorShimmer">#E6E5E5</color>
+    <color name="colorBackground">#DFF4F2F2</color>
+
+    <color name="button_continue">@color/colorPrimaryDark</color>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="#CDF3F0F0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/layout_time"
+       android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_status"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/business_hours"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/text_view_business_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/_8_30"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+    <com.mikelau.views.shimmer.ShimmerRecyclerViewX
+        android:layout_below="@id/layout_time"
+        android:id="@+id/shimmer_recycler_view_list_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

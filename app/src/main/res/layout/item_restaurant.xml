@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"/>
+
+        <TextView
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_baseline_thumb_up"
+            android:textSize="12sp"
+            android:id="@+id/item_favorite_restaurant"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="#ff00"
+            android:text="@string/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/item_layout"
+            android:background="@android:drawable/screen_background_dark_transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:text="Đóng cửa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/item_notification"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:text="Hẹn giao vào lúc 08:00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:padding="5dp"
+            android:drawablePadding="5dp"
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/app_name"
+            android:textColor="@android:color/black"
+            app:drawableStartCompat="@drawable/icon_restaurant" />
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="end"
+            android:id="@+id/item_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/address" />
+
+        <TextView
+            android:textSize="10sp"
+            android:padding="5dp"
+            android:background="@drawable/custom_text_view"
+            android:textColor="#EF5959"
+            android:id="@+id/item_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Giảm giá 10%" />
+    </LinearLayout>
+</LinearLayout>

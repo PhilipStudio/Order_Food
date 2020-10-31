@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image_view_restaurant"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Đồ ăn ngon, chất lượng phục vụ tốt thì xin hãy đánh giá 5 sao cho quán ạ."
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_gravity="center"
+        android:stepSize="1"
+        android:numStars="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/text_view_status"
+        android:text="@string/great"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="#8C8B8B"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <com.github.abdularis.civ.AvatarImageView
+            android:id="@+id/avatar_image_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_account_circle"
+            app:strokeWidth="1dp"
+            app:strokeColor="@android:color/white"
+            app:avatarBackgroundColor="@color/colorPrimaryDark"
+            app:text="A"
+            app:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/edit_text_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_edit_text_comment"
+            android:ellipsize="end"
+            android:hint="@string/comment"
+            android:maxLines="1" />
+
+        <ImageView
+            android:id="@+id/image_view_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="-40"
+            android:src="@drawable/ic_baseline_send" />
+    </LinearLayout>
+
+</LinearLayout>

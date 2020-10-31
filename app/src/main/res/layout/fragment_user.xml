@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:elevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/your_profile"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_baseline_notifications_none" />
+            </LinearLayout>
+
+            <com.github.abdularis.civ.AvatarImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/avatar_image_view"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_account_circle"
+                app:strokeWidth="1dp"
+                app:strokeColor="@android:color/white"
+                app:avatarBackgroundColor="@color/colorPrimaryDark"
+                app:text="A"
+                app:textSize="22sp"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/text_view_name_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/app_name"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:elevation="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@android:color/black"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_baseline_payment" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="Địa chỉ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_baseline_explore" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/invite_friend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_baseline_group_add" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:elevation="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@android:color/black"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/supported"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_baseline_help_outline" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_baseline_settings" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_sign_out"
+            android:textColor="@android:color/white"
+            android:background="@drawable/custom_button"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/sign_out" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
