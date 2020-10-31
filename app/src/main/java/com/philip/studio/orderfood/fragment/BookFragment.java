@@ -94,7 +94,7 @@ public class BookFragment extends Fragment {
                 ArrayList<Restaurant> arrayList = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Restaurant restaurant = dataSnapshot.getValue(Restaurant.class);
-                    if (restaurant.getLocationCategory().equals(text)){
+                    if (restaurant.getLocationCategory().equals(text) && restaurant.getIsBook() == 1){
                         arrayList.add(restaurant);
                     }
                 }

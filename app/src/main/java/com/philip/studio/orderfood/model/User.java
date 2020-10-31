@@ -7,8 +7,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class User implements Parcelable {
-    private String id;
-    private String email;
     private String phoneNumber;
     private String name;
     private String gender;
@@ -19,17 +17,11 @@ public class User implements Parcelable {
     public User() {
     }
 
-    public User(String id, String email, String name, String gender, String birthday) {
-        this.id = id;
-        this.email = email;
+    public User(String phoneNumber, String name, String gender, String birthday, String address, String avatar) {
+        this.phoneNumber = phoneNumber;
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
-    }
-
-    public User(String phoneNumber, String name, String address, String avatar) {
-        this.phoneNumber = phoneNumber;
-        this.name = name;
         this.address = address;
         this.avatar = avatar;
     }
@@ -39,6 +31,8 @@ public class User implements Parcelable {
         name = in.readString();
         address = in.readString();
         avatar = in.readString();
+        gender = in.readString();
+        birthday = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -69,6 +63,14 @@ public class User implements Parcelable {
         return avatar;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -80,5 +82,7 @@ public class User implements Parcelable {
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(avatar);
+        dest.writeString(gender);
+        dest.writeString(birthday);
     }
 }

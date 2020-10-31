@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.philip.studio.orderfood.R;
-import com.philip.studio.orderfood.activity.RestaurantBookActivity;
+import com.philip.studio.orderfood.activity.BookDetailActivity;
 import com.philip.studio.orderfood.model.Restaurant;
 
 import java.text.ParseException;
@@ -110,7 +110,7 @@ public class RestaurantBookAdapter extends RecyclerView.Adapter<RestaurantBookAd
 
             itemView.setOnClickListener(v -> {
                 int pos = getAdapterPosition();
-                Intent intent = new Intent(context, RestaurantBookActivity.class);
+                Intent intent = new Intent(context, BookDetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("data", arrayList.get(pos));
                 context.startActivity(intent);

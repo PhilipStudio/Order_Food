@@ -3,43 +3,32 @@ package com.philip.studio.orderfood.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
-@IgnoreExtraProperties
 public class Book implements Parcelable {
-    private Restaurant restaurant;//Dat ban tai nha hang nao
+    private String restaurantID;//Dat ban tai nha hang nao
+    private String idUser;
     private String dateTime;//Thoi gian dat ban
-    private String image;
     private int numberPerson;//So luong nguoi
-    private int isPromotion; //Nha hang co chuong trinh giam gia hay khong ?
-    private double discount; //So phan tram giam gia
     private String event; //Dat ban cho su kien gi
-    private String content; //Noi dung chuong trinh giam gia
+    private String note; //Ghi chú
 
     //Vi du dat mot ban an tai nha hang A gom 10 cho su kien sinh nhat tu 20:30 - 22:30
-    public Book() {
-    }
 
-    public Book(Restaurant restaurant, String dateTime, String image, int numberPerson, int isPromotion, double discount, String event, String content) {
-        this.restaurant = restaurant;
+    public Book(String restaurantID, String idUser, String dateTime, int numberPerson, String event, String note) {
+        this.restaurantID = restaurantID;
+        this.idUser = idUser;
         this.dateTime = dateTime;
-        this.image = image;
         this.numberPerson = numberPerson;
-        this.isPromotion = isPromotion;
-        this.discount = discount;
         this.event = event;
-        this.content = content;
+        this.note = note;
     }
 
     protected Book(Parcel in) {
-        restaurant = in.readParcelable(Restaurant.class.getClassLoader());
+        restaurantID = in.readString();
+        idUser = in.readString();
         dateTime = in.readString();
-        image = in.readString();
         numberPerson = in.readInt();
-        isPromotion = in.readInt();
-        discount = in.readDouble();
         event = in.readString();
-        content = in.readString();
+        note = in.readString();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -54,8 +43,12 @@ public class Book implements Parcelable {
         }
     };
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public String getRestaurantID() {
+        return restaurantID;
+    }
+
+    public String getIdUser() {
+        return idUser;
     }
 
     public String getDateTime() {
@@ -66,24 +59,12 @@ public class Book implements Parcelable {
         return numberPerson;
     }
 
-    public int getIsPromotion() {
-        return isPromotion;
-    }
-
     public String getEvent() {
         return event;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public String getImage() {
-        return image;
+    public String getNote() {
+        return note;
     }
 
     @Override
@@ -93,13 +74,23 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(restaurant, flags);
+        dest.writeString(restaurantID);
+        dest.writeString(idUser);
         dest.writeString(dateTime);
-        dest.writeString(image);
         dest.writeInt(numberPerson);
-        dest.writeInt(isPromotion);
-        dest.writeDouble(discount);
         dest.writeString(event);
-        dest.writeString(content);
+        dest.writeString(note);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "restaurantID='" + restaurantID + '\'' +
+                ", idUser='" + idUser + '\'' +
+                ", dateTime='" + dateTime + '\'' +
+                ", numberPerson=" + numberPerson +
+                ", event='" + event + '\'' +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

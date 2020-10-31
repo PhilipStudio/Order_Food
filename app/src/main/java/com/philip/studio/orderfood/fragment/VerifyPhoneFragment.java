@@ -70,7 +70,7 @@ public class VerifyPhoneFragment extends Fragment {
             if (data.equals(code)) {
                 verifyCode(data, phoneNumber);
             } else {
-                Toast.makeText(getContext(), "Failed with code", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Mã xác nhận không đúng", Toast.LENGTH_SHORT).show();
             }
         });
 

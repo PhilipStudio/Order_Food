@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/add_circle/baseline_add_circle_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/date_range/baseline_date_range_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="fc241f" />
-                            <entry key="outputName" value="ic_baseline_add_circle" />
+                            <entry key="color" value="757575" />
+                            <entry key="outputName" value="ic_baseline_date_range" />
                             <entry key="sourceFile" value="C:\Users\ViettelStore\AndroidStudioProjects\Order Food" />
                           </map>
                         </option>

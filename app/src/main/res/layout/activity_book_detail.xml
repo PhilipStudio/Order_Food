@@ -195,36 +195,42 @@
                 android:paddingBottom="8dp">
 
                 <Button
+                    android:id="@+id/button_eat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ăn uống"
                     android:textAllCaps="false" />
 
                 <Button
+                    android:id="@+id/button_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sinh nhật"
                     android:textAllCaps="false" />
 
                 <Button
+                    android:id="@+id/button_dating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hẹn hò"
                     android:textAllCaps="false" />
 
                 <Button
+                    android:id="@+id/button_lunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ăn trưa"
                     android:textAllCaps="false" />
 
                 <Button
+                    android:id="@+id/button_dinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ăn tối"
                     android:textAllCaps="false" />
 
                 <Button
+                    android:id="@+id/button_happy_life"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mừng thọ"
