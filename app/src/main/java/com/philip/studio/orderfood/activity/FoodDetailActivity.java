@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,18 +15,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.adapter.SuggestionAdapter;
 import com.philip.studio.orderfood.model.Food;
-import com.philip.studio.orderfood.model.Saved;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import io.realm.Realm;
 
 public class FoodDetailActivity extends AppCompatActivity {
-    Toolbar toolbar;
     ImageView imageView;
     FloatingActionButton fabFavorite;
     TextView txtName, txtPrice;
@@ -76,7 +71,6 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        toolbar = findViewById(R.id.toolbar);
         imageView = findViewById(R.id.image_view_food);
         txtName = findViewById(R.id.text_view_name_food);
         txtPrice = findViewById(R.id.text_view_price_food);

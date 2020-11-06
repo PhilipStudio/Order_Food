@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+
 @IgnoreExtraProperties
 public class User implements Parcelable {
     private String phoneNumber;
@@ -13,6 +15,8 @@ public class User implements Parcelable {
     private String birthday;
     private String address;
     private String avatar;
+    private ArrayList<String> listLocationsFavorite;
+    private ArrayList<String> listFoodsFavorite;
 
     public User() {
     }
@@ -69,6 +73,14 @@ public class User implements Parcelable {
 
     public String getGender() {
         return gender;
+    }
+
+    public ArrayList<String> getListFoodsFavorite() {
+        return listFoodsFavorite;
+    }
+
+    public ArrayList<String> getListLocationsFavorite() {
+        return listLocationsFavorite;
     }
 
     @Override

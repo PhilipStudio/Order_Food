@@ -16,6 +16,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -31,8 +32,11 @@ import com.bumptech.glide.Glide;
 import com.github.abdularis.civ.AvatarImageView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.adapter.CartAdapter;
 import com.philip.studio.orderfood.fragment.CommentFragment;
@@ -40,6 +44,7 @@ import com.philip.studio.orderfood.fragment.DeliveryFragment;
 import com.philip.studio.orderfood.fragment.InformationFragment;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Comment;
+import com.philip.studio.orderfood.model.Menu;
 import com.philip.studio.orderfood.model.Restaurant;
 import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
@@ -48,6 +53,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import io.realm.Realm;
@@ -68,11 +74,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     Restaurant restaurant;
     String time;
     UserUtil userUtil;
-    String[] countries = {"Vietnam", "England", "Canada", "France", "Australia"};
     RealmResults<Cart> realmResults;
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference dataCommentRef;
+    DatabaseReference dataCommentRef, dataResRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +109,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             txtPriceRange.setText(priceRange);
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countries);
-        completeTextView.setAdapter(arrayAdapter);
-        completeTextView.setThreshold(1);
+        searchFoodFromMenu(restaurant.getIdRes());
 
         User user = userUtil.getUser();
         imgFavorite.setOnClickListener(v -> showDialogFavorite(restaurant, user));
@@ -151,6 +154,29 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void searchFoodFromMenu(String idRes){
+        DatabaseReference dataRef = firebaseDatabase.getReference().child("Menu");
+        dataRef.child(idRes).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<String> listName = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Menu menu = dataSnapshot.getValue(Menu.class);
+                    listName.add(menu.getName());
+                }
+
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RestaurantDetailActivity.this, android.R.layout.simple_list_item_1, listName);
+                completeTextView.setAdapter(arrayAdapter);
+                completeTextView.setThreshold(1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void showAlertDialogNotification() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thông báo từ cửa hàng");
@@ -159,8 +185,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", (dialog, which) -> finish());
 
         AlertDialog alertDialog = builder.create();
-//        alertDialog.setCancelable(false);
-//        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
     }
 
@@ -188,7 +212,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         CartAdapter cartAdapter = new CartAdapter(realmResults, context);
         rvListCart.setAdapter(cartAdapter);
 
-
         String total = displayTotalOrder(realmResults);
         txtTotal.setText(total);
 
@@ -197,8 +220,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             realm1.executeTransaction(realm2 -> realm2.deleteAll());
         });
 
+        ArrayList<Cart> arrayList = new ArrayList<>(realmResults);
+
         btnDelivery.setOnClickListener(v -> {
             Intent intent = new Intent(RestaurantDetailActivity.this, OrderActivity.class);
+            intent.putExtra("list", arrayList);
             startActivity(intent);
             dialog.cancel();
         });
@@ -345,6 +371,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dataCommentRef = firebaseDatabase.getReference().child("Comment");
+        dataResRef = firebaseDatabase.getReference().child("Restaurant");
 
         userUtil = new UserUtil(this);
     }

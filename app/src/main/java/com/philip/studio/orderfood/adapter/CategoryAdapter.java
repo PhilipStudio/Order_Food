@@ -14,10 +14,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.callback.OnItemCategoryClickListener;
+import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Category;
 import com.philip.studio.orderfood.model.Restaurant;
 
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuViewHolder> {
 
@@ -50,7 +54,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
             case 1:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_second, parent, false);
                 return new MenuViewHolder(view);
-
+            case 2:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_three, parent, false);
+                return new MenuViewHolder(view);
             default:
                 throw new IllegalArgumentException();
         }
@@ -58,6 +64,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
 
     @Override
     public void onBindViewHolder(@NonNull final MenuViewHolder holder, final int position) {
+        Realm.init(context);
+        Realm realm = Realm.getDefaultInstance();
         switch (categories.get(position).getViewType()) {
             case 0:
                 holder.txtNameCategory.setText(categories.get(position).getNameCategory());
@@ -104,6 +112,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
                     }
                 });
                 break;
+            case 2:
+                holder.txtNameCategory.setText(categories.get(position).getNameCategory());
+                holder.sRVListRestaurant1.setHasFixedSize(true);
+                LinearLayoutManager layoutManager1 = new LinearLayoutManager(context, ShimmerRecyclerViewX.HORIZONTAL, false);
+                holder.sRVListRestaurant1.setLayoutManager(layoutManager1);
+
+                RealmResults<Cart> realmResults = realm.where(Cart.class).beginGroup().findAll();
+                YourCartAdapter yourCartAdapter = new YourCartAdapter(realmResults, context);
+                holder.sRVListRestaurant1.setAdapter(yourCartAdapter);
         }
     }
 

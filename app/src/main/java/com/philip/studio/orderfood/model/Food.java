@@ -9,7 +9,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Food implements Parcelable {
     private String id;
     private String name, image;
-    private double price;
+    private double price, like;
 
     public Food() {
     }
@@ -54,6 +54,10 @@ public class Food implements Parcelable {
 
     public String getId() {
         return id;
+    }
+
+    public double getLike() {
+        return like;
     }
 
     @Override

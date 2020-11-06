@@ -34,6 +34,7 @@ import com.philip.studio.orderfood.model.Category;
 import com.philip.studio.orderfood.model.Restaurant;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
     DatabaseReference dataRef;
 
     OnItemCategoryClickListener onItemCategoryClickListener;
-    String[] locationCategory = {"Tất cả", "Nhà hàng", "Quán ăn", "Khách sạn", "Ăn vặt/vỉa hè"};
+    String[] locationCategory = {"Tất cả", "Nhà hàng", "Quán ăn", "Cafe/Dessert", "Ăn vặt/vỉa hè"};
     ArrayList<Integer> arrayList = new ArrayList<>();
 
     @Nullable
@@ -84,6 +85,16 @@ public class HomeFragment extends Fragment {
                             onItemCategoryClickListener.onItemClick("Quán ăn");
                         }
                         break;
+                    case 3:
+                        if (onItemCategoryClickListener != null) {
+                            onItemCategoryClickListener.onItemClick("Cafe/Dessert");
+                        }
+                        break;
+                    case 4:
+                        if (onItemCategoryClickListener != null) {
+                            onItemCategoryClickListener.onItemClick("Ăn vặt/vỉa hè");
+                        }
+                        break;
                 }
             }
 
@@ -98,7 +109,11 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         sRVListCategory.setLayoutManager(layoutManager);
 
-        loadMenu();
+        try {
+            loadMenu();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         txtAddress.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddressActivity.class);
@@ -116,7 +131,36 @@ public class HomeFragment extends Fragment {
         spinner.setAdapter(arrayAdapter);
     }
 
-    private void loadMenu() {
+    private void loadMenu() throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String currentTime = format.format(new Date());
+
+        Date currentDateTime = format.parse(currentTime);
+        Date dateTimeStartMorning = stringToDate("07:30", "HH:mm"); //buoi sang
+        Date dateTimeEndMorning = stringToDate("9:00", "HH:mm");
+
+        Date dateTimeStartNoon = stringToDate("10:45", "HH:mm"); //buoi trua
+        Date dateTimeEndNoon = stringToDate("12:30", "HH:mm");
+
+        Date dateTimeStartAfternoon = stringToDate("15:00", "HH:mm"); //buoi chieu
+        Date dateTimeEndAfternoon = stringToDate("17:00", "HH:mm");
+
+        Date dateTimeStartNight = stringToDate("18:00", "HH:mm"); //buoi toi
+        Date dateTimeEndNight = stringToDate("19:45", "HH:mm");
+
+        long current = currentDateTime.getTime(); // gio hien tai
+        long timeStartMorning = dateTimeStartMorning.getTime();
+        long timeEndMorning = dateTimeEndMorning.getTime();
+
+        long timeStartNoon = dateTimeStartNoon.getTime();
+        long timeEndNoon = dateTimeEndNoon.getTime();
+
+        long timeStartAfternoon = dateTimeStartAfternoon.getTime();
+        long timeEndAfternoon = dateTimeEndAfternoon.getTime();
+
+        long timeStartNight = dateTimeStartNight.getTime();
+        long timeEndNight = dateTimeEndNight.getTime();
+
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -132,18 +176,31 @@ public class HomeFragment extends Fragment {
                         arrayList1.add(restaurant);
                     } else {
                         try {
-                            SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                            String currentTime = format.format(new Date());
-                            Date currentDateTime = format.parse(currentTime);
-                            Date startDateTime = format.parse(restaurant.getBusinessHours().getOpenTime());
-                            Date endDateTime = format.parse(restaurant.getBusinessHours().getCloseTime());
+                            Date openTime = format.parse(restaurant.getBusinessHours().getOpenTime());
+                            Date closeTime = format.parse(restaurant.getBusinessHours().getCloseTime());
 
-                            long current = currentDateTime.getTime();
-                            long start = startDateTime.getTime();
-                            long end = endDateTime.getTime();
+                            long start = openTime.getTime(); // gio mo cua
+                            long end = closeTime.getTime(); // gio dong cua
 
-                            if (current > start && current < end) {
-                                arrayList2.add(restaurant);
+                            if (timeStartMorning <= current && current <= timeEndMorning){
+                                if(timeStartMorning <= start && start <= timeEndMorning){
+                                    arrayList2.add(restaurant);
+                                }
+                            }
+                            else if (timeStartNoon <= current && current <= timeEndNoon){
+                                if (timeStartMorning <= start && start <= timeEndNoon){
+                                    arrayList2.add(restaurant);
+                                }
+                            }
+                            else if (timeStartAfternoon <= current && current <= timeEndAfternoon){
+                                if (timeStartMorning <= start || start <= timeEndAfternoon){
+                                    arrayList2.add(restaurant);
+                                }
+                            }
+                            else if (timeStartNight <= current && current <= timeEndNight){
+                                if (timeStartMorning <= start || start <= timeEndNight){
+                                    arrayList2.add(restaurant);
+                                }
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -151,8 +208,18 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                categories.add(new Category("Giỏ hàng của bạn", null, 2));
                 categories.add(new Category("Khuyến mãi", arrayList1, 0));
-                categories.add(new Category("Dành cho bạn", arrayList2, 0));
+                if (timeStartMorning <= current && current <= timeEndMorning) {
+                    categories.add(new Category("Dành cho bữa sáng", arrayList2, 0));
+                } else if (timeStartNoon <= current && current <= timeEndNoon) {
+                    categories.add(new Category("Dành cho bữa trưa", arrayList2, 0));
+                } else if (timeStartAfternoon <= current && current <= timeEndAfternoon) {
+                    categories.add(new Category("Dành cho bữa chiều", arrayList2, 0));
+                } else if(timeStartNight <= current && current <= timeEndNight){
+                    categories.add(new Category("Dành cho bữa tối", arrayList2, 0));
+                }
+                categories.add(new Category("Dành cho bạn", arrayList3, 0));
                 categories.add(new Category("Thể loại", arrayList3, 1));
 
                 CategoryAdapter adapter = new CategoryAdapter(categories, getContext());
@@ -185,6 +252,17 @@ public class HomeFragment extends Fragment {
                 break;
         }
     };
+
+    private void loadRestaurantRealtime(long time1, long time2){
+        
+    }
+    private Date stringToDate(String aDate, String aFormat) {
+        if (aDate == null) return null;
+        ParsePosition pos = new ParsePosition(0);
+        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
+        Date stringDate = simpledateformat.parse(aDate, pos);
+        return stringDate;
+    }
 
     private void initView(View view) {
         sRVListCategory = view.findViewById(R.id.shimmer_recycler_view_list_category);

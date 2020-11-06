@@ -1,5 +1,6 @@
 package com.philip.studio.orderfood.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,13 +43,12 @@ public class VerifyPhoneFragment extends Fragment {
     DatabaseReference dataUserRef;
 
     FloatingActionButton fabBack;
+    EditText edtVerify;
+    FButton FBtnVerify;
 
     public VerifyPhoneFragment(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    EditText edtVerify;
-    FButton FBtnVerify;
 
     @Nullable
     @Override
@@ -82,7 +82,7 @@ public class VerifyPhoneFragment extends Fragment {
                 phone,
                 60,
                 TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
+                (Activity) TaskExecutors.MAIN_THREAD,
                 mCallback
         );
     }
@@ -139,7 +139,7 @@ public class VerifyPhoneFragment extends Fragment {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(getContext(), "Your verification is failed with " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Đã xảy ra lỗi với mã xác nhận của bạn" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 

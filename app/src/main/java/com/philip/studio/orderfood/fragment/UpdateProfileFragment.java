@@ -32,6 +32,8 @@ import com.philip.studio.orderfood.activity.MainActivity;
 import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
 
+import io.realm.Realm;
+
 public class UpdateProfileFragment extends Fragment {
 
     Button btnSignIn;
@@ -46,6 +48,7 @@ public class UpdateProfileFragment extends Fragment {
     String data, sex, birthday, link;
     Uri uri;
     static final int REQUESTCODE = 123;
+    Realm realm;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataRef;
@@ -176,5 +179,6 @@ public class UpdateProfileFragment extends Fragment {
         dataRef = firebaseDatabase.getReference().child("User");
         firebaseStorage = FirebaseStorage.getInstance();
         stoRef = firebaseStorage.getReference().child("image_avatar");
+        realm = Realm.getDefaultInstance();
     }
 }

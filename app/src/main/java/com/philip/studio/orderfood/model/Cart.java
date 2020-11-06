@@ -1,9 +1,12 @@
 package com.philip.studio.orderfood.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Cart extends RealmObject {
+public class Cart extends RealmObject implements Parcelable {
     @PrimaryKey
     private String productID;
     private String restaurantID;
@@ -23,6 +26,27 @@ public class Cart extends RealmObject {
         this.quantity = quantity;
         this.price = price;
     }
+
+    protected Cart(Parcel in) {
+        productID = in.readString();
+        restaurantID = in.readString();
+        productName = in.readString();
+        productImage = in.readString();
+        quantity = in.readString();
+        price = in.readString();
+    }
+
+    public static final Creator<Cart> CREATOR = new Creator<Cart>() {
+        @Override
+        public Cart createFromParcel(Parcel in) {
+            return new Cart(in);
+        }
+
+        @Override
+        public Cart[] newArray(int size) {
+            return new Cart[size];
+        }
+    };
 
     public String getProductID() {
         return productID;
@@ -46,5 +70,20 @@ public class Cart extends RealmObject {
 
     public String getProductImage() {
         return productImage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(productID);
+        dest.writeString(restaurantID);
+        dest.writeString(productName);
+        dest.writeString(productImage);
+        dest.writeString(quantity);
+        dest.writeString(price);
     }
 }

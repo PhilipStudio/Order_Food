@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Book implements Parcelable {
+    private String idBook;
     private String restaurantID;//Dat ban tai nha hang nao
     private String idUser;
     private String dateTime;//Thoi gian dat ban
@@ -13,7 +14,8 @@ public class Book implements Parcelable {
 
     //Vi du dat mot ban an tai nha hang A gom 10 cho su kien sinh nhat tu 20:30 - 22:30
 
-    public Book(String restaurantID, String idUser, String dateTime, int numberPerson, String event, String note) {
+    public Book(String idBook, String restaurantID, String idUser, String dateTime, int numberPerson, String event, String note) {
+        this.idBook = idBook;
         this.restaurantID = restaurantID;
         this.idUser = idUser;
         this.dateTime = dateTime;
@@ -23,6 +25,7 @@ public class Book implements Parcelable {
     }
 
     protected Book(Parcel in) {
+        idBook = in.readString();
         restaurantID = in.readString();
         idUser = in.readString();
         dateTime = in.readString();
@@ -42,6 +45,10 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
+
+    public String getIdBook() {
+        return idBook;
+    }
 
     public String getRestaurantID() {
         return restaurantID;
@@ -74,23 +81,12 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(idBook);
         dest.writeString(restaurantID);
         dest.writeString(idUser);
         dest.writeString(dateTime);
         dest.writeInt(numberPerson);
         dest.writeString(event);
         dest.writeString(note);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "restaurantID='" + restaurantID + '\'' +
-                ", idUser='" + idUser + '\'' +
-                ", dateTime='" + dateTime + '\'' +
-                ", numberPerson=" + numberPerson +
-                ", event='" + event + '\'' +
-                ", note='" + note + '\'' +
-                '}';
     }
 }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.model.Book;
 import com.philip.studio.orderfood.model.Restaurant;
-import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +35,7 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
     Restaurant restaurant;
     String time, event;
     UserUtil userUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +60,15 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
         btnBirthday.setOnClickListener(listener);
 
         btnBook.setOnClickListener(v -> {
-            User user = userUtil.getUser();
             String note = edtNote.getText().toString();
-            Book book = new Book(restaurant.getIdRes(), "0926471468", time, 3, event, note);
-            Toast.makeText(this, "Book Detail:" + book.toString(), Toast.LENGTH_SHORT).show();
+            String restaurantID = restaurant.getIdRes();
+            String idUser = "0926471468";
+            String idBook = restaurant.getIdRes() + idUser;
+            Book book = new Book(idBook, restaurantID, idUser, time, 3, event, note);
         });
     }
 
-    private void initView(){
+    private void initView() {
         edtNote = findViewById(R.id.edit_text_note);
         txtNameUser = findViewById(R.id.text_view_name_user);
         txtNameRestaurant = findViewById(R.id.text_view_name_restaurant);
