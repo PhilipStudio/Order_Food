@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,14 +34,14 @@ public class FoodDetailActivity extends AppCompatActivity {
     Food food;
     int position;
     Realm realm;
+    boolean isClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_detail);
-
+        Realm.init(this);
         initView();
-
         Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getBundleExtra("data");
@@ -59,6 +61,17 @@ public class FoodDetailActivity extends AppCompatActivity {
                 setUpRecyclerViewListSuggestion(arrayList);
             }
         }
+
+        fabFavorite.setOnClickListener(v -> {
+            isClick = true;
+            if (isClick){
+                fabFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite);
+                isClick = false;
+            }
+            else{
+                fabFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_border);
+            }
+        });
     }
 
     private void setUpRecyclerViewListSuggestion(ArrayList<Food> arrayList) {

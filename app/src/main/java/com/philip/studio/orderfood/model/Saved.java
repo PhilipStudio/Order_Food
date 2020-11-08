@@ -1,39 +1,21 @@
 package com.philip.studio.orderfood.model;
 
+import io.realm.RealmResults;
+
 public class Saved {
-    String timeSaved;
-    String idRes, idFood;
-    int viewType;
+    private String name;
+    RealmResults<Cart> realmResults;
 
-    public Saved() {
+    public Saved(String name, RealmResults<Cart> realmResults) {
+        this.name = name;
+        this.realmResults = realmResults;
     }
 
-    public Saved(String timeSaved, String idRes, String idFood, int viewType) {
-        this.timeSaved = timeSaved;
-        this.idRes = idRes;
-        this.idFood = idFood;
-        this.viewType = viewType;
+    public RealmResults<Cart> getRealmResults() {
+        return realmResults;
     }
 
-    public Saved(String timeSaved, String idRes, int viewType) {
-        this.timeSaved = timeSaved;
-        this.idRes = idRes;
-        this.viewType = viewType;
-    }
-
-    public String getIdRes() {
-        return idRes;
-    }
-
-    public String getIdFood() {
-        return idFood;
-    }
-
-    public String getTimeSaved() {
-        return timeSaved;
-    }
-
-    public int getViewType() {
-        return viewType;
+    public String getName() {
+        return name;
     }
 }

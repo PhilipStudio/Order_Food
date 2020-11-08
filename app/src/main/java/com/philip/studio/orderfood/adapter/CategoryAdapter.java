@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.callback.OnItemCategoryClickListener;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Category;
 import com.philip.studio.orderfood.model.Restaurant;
+import com.philip.studio.orderfood.model.Saved;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
     ArrayList<Category> categories;
     Context context;
     OnItemCategoryClickListener onItemCategoryClickListener;
+
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference dataRef = firebaseDatabase.getReference().child("Restaurant");
 
     public CategoryAdapter(ArrayList<Category> categories, Context context) {
         this.categories = categories;
@@ -118,8 +124,36 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
                 LinearLayoutManager layoutManager1 = new LinearLayoutManager(context, ShimmerRecyclerViewX.HORIZONTAL, false);
                 holder.sRVListRestaurant1.setLayoutManager(layoutManager1);
 
-                RealmResults<Cart> realmResults = realm.where(Cart.class).beginGroup().findAll();
-                YourCartAdapter yourCartAdapter = new YourCartAdapter(realmResults, context);
+                RealmResults<Cart> realmResults = realm.where(Cart.class).findAll();
+                ArrayList<String> arrayList = new ArrayList<>();
+                arrayList.add(" ");
+                boolean isValid = false;
+                for (int i=0; i < realmResults.size(); i++){
+                    for (int j=0; j < arrayList.size(); j++){
+                        if (!realmResults.get(i).getRestaurantID().equals(arrayList.get(j))){
+                            isValid = true;
+                        }
+                        else {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    if (isValid){
+                        assert realmResults.get(i) != null;
+                        arrayList.add(realmResults.get(i).getRestaurantID());
+                    }
+                }
+
+                ArrayList<Saved> savedArrayList = new ArrayList<>();
+                for (int i=0; i < arrayList.size(); i++){
+                    if(!arrayList.get(i).equals(" ")){
+                        RealmResults<Cart> realmResults1 = realm.where(Cart.class).equalTo("restaurantID", arrayList.get(i)).findAll();
+                        savedArrayList.add(new Saved("Giỏ hàng " + i, realmResults1));
+                    }
+                }
+
+                YourCartAdapter yourCartAdapter = new YourCartAdapter(savedArrayList, context);
                 holder.sRVListRestaurant1.setAdapter(yourCartAdapter);
         }
     }

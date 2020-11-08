@@ -12,15 +12,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.philip.studio.orderfood.R;
+import com.philip.studio.orderfood.model.Food;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class SavedFragment extends Fragment {
 
     RecyclerView rVListSaved;
 
+    Realm realm;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_saved, container, false);
+        Realm.init(getContext());
         rVListSaved = view.findViewById(R.id.recycler_view_list_saved);
         rVListSaved.setHasFixedSize(true);
 

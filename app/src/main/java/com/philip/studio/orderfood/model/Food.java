@@ -5,8 +5,13 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 @IgnoreExtraProperties
 public class Food implements Parcelable {
+
+    @PrimaryKey
     private String id;
     private String name, image;
     private double price, like;

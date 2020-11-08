@@ -22,7 +22,7 @@
             android:drawablePadding="10dp"
             android:text="@string/name_restaurant"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:drawableStartCompat="@drawable/icon_restaurant" />
 

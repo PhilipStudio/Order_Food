@@ -21,6 +21,7 @@
     <string name="view_more">Xem thêm</string>
     <string name="title_activity_maps">Map</string>
     <string name="enter_address">Nhập địa chỉ</string>
+    <string name="liked">Đã thích</string>
     <string name="saved">Đã lưu</string>
     <string name="add_address_your_house">Thêm địa chỉ công ty của bạn</string>
     <string name="add_address_your_company">Thêm địa chỉ nhà của bạn</string>

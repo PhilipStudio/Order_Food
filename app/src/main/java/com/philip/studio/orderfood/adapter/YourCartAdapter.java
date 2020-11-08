@@ -1,6 +1,7 @@
 package com.philip.studio.orderfood.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +12,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.github.abdularis.civ.AvatarImageView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.philip.studio.orderfood.R;
+import com.philip.studio.orderfood.activity.RestaurantDetailActivity;
 import com.philip.studio.orderfood.model.Cart;
+import com.philip.studio.orderfood.model.Restaurant;
+import com.philip.studio.orderfood.model.Saved;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
 public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHolder> {
 
-    RealmResults<Cart> realmResults;
+    ArrayList<Saved> arrayList;
     Context context;
 
-    public YourCartAdapter(RealmResults<Cart> realmResults, Context context) {
-        this.realmResults = realmResults;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference dataRef = firebaseDatabase.getReference().child("Restaurant");
+
+    public YourCartAdapter(ArrayList<Saved> arrayList, Context context) {
+        this.arrayList = arrayList;
         this.context = context;
     }
 
@@ -38,17 +51,33 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(realmResults.get(position).getProductImage()).into(holder.avatarImageView1);
-        Glide.with(context).load(realmResults.get(position).getProductImage()).into(holder.avatarImageView2);
-        Glide.with(context).load(realmResults.get(position).getProductImage()).into(holder.avatarImageView3);
+        holder.txtName.setText(arrayList.get(position).getName());
 
-        String total = displayTotalOrder(realmResults);
+        switch (arrayList.get(position).getRealmResults().size()){
+            case 1:
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(0).getProductImage()).into(holder.avatarImageView1);
+                holder.avatarImageView2.setVisibility(View.GONE);
+                holder.avatarImageView3.setVisibility(View.GONE);
+                break;
+            case 2:
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(0).getProductImage()).into(holder.avatarImageView1);
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(1).getProductImage()).into(holder.avatarImageView2);
+                holder.avatarImageView3.setVisibility(View.GONE);
+                break;
+            case 3:
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(0).getProductImage()).into(holder.avatarImageView1);
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(1).getProductImage()).into(holder.avatarImageView2);
+                Glide.with(context).load(arrayList.get(position).getRealmResults().get(2).getProductImage()).into(holder.avatarImageView3);
+                break;
+        }
+
+        String total = displayTotalOrder(arrayList.get(position).getRealmResults());
         holder.txtTotal.setText(total);
     }
 
     @Override
     public int getItemCount() {
-        return realmResults.size();
+        return arrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -66,6 +95,24 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
             avatarImageView2 = itemView.findViewById(R.id.item_avatar_image_view_two);
             avatarImageView3 = itemView.findViewById(R.id.item_avatar_image_view_three);
 
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                dataRef.child(arrayList.get(pos).getRealmResults().get(0).getRestaurantID()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                        Intent intent = new Intent(context, RestaurantDetailActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("restaurant", restaurant);
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            });
         }
     }
 
