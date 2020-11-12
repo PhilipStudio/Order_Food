@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.philip.studio.orderfood.R;
-import com.philip.studio.orderfood.model.Food;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class SavedFragment extends Fragment {
 

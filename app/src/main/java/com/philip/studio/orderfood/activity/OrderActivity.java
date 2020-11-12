@@ -17,12 +17,8 @@ import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.fragment.InformationOrderFragment;
 import com.philip.studio.orderfood.fragment.ListFoodFragment;
 import com.philip.studio.orderfood.model.Cart;
-import com.philip.studio.orderfood.model.Food;
 
 import java.util.ArrayList;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class OrderActivity extends AppCompatActivity {
 

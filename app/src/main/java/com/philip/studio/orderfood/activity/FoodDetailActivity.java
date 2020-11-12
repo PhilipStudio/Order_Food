@@ -1,7 +1,6 @@
 package com.philip.studio.orderfood.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,7 +25,7 @@ import io.realm.Realm;
 public class FoodDetailActivity extends AppCompatActivity {
     ImageView imageView;
     FloatingActionButton fabFavorite;
-    TextView txtName, txtPrice;
+    TextView txtName, txtPrice, txtLike;
     RecyclerView rVListSuggestion;
 
     ArrayList<Food> arrayList;
@@ -56,6 +54,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     double price = food.getPrice();
                     String formattedPrice = formatter.format(price);
                     txtPrice.setText(formattedPrice + "đ");
+                    txtLike.setText(String.valueOf(food.getLike()));
                 }
 
                 setUpRecyclerViewListSuggestion(arrayList);
@@ -65,11 +64,10 @@ public class FoodDetailActivity extends AppCompatActivity {
         fabFavorite.setOnClickListener(v -> {
             isClick = true;
             if (isClick){
-                fabFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite);
-                isClick = false;
+                fabFavorite.setImageResource(R.drawable.ic_baseline_favorite);
             }
             else{
-                fabFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_border);
+                fabFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
             }
         });
     }
@@ -81,6 +79,22 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         SuggestionAdapter adapter = new SuggestionAdapter(arrayList, this);
         rVListSuggestion.setAdapter(adapter);
+
+        adapter.setOnItemSuggestionClickListener(data -> {
+            if (data != null) {
+                Glide.with(FoodDetailActivity.this).load(data.getImage()).into(imageView);
+                txtName.setText(data.getName());
+                NumberFormat formatter = new DecimalFormat("#,###");
+                double price = data.getPrice();
+                String formattedPrice = formatter.format(price);
+                txtPrice.setText(formattedPrice + "đ");
+                txtLike.setText(String.valueOf(data.getLike()));
+            }
+        });
+    }
+
+    public void onBack(View view){
+        finish();
     }
 
     private void initView() {
@@ -89,6 +103,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         txtPrice = findViewById(R.id.text_view_price_food);
         fabFavorite = findViewById(R.id.fab_favorite);
         rVListSuggestion = findViewById(R.id.recycler_view_list_suggestions);
+        txtLike = findViewById(R.id.text_view_like_food);
 
         realm = Realm.getDefaultInstance();
     }

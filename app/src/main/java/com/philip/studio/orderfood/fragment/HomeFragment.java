@@ -139,10 +139,10 @@ public class HomeFragment extends Fragment {
         Date dateTimeStartMorning = stringToDate("07:30", "HH:mm"); //buoi sang
         Date dateTimeEndMorning = stringToDate("9:00", "HH:mm");
 
-        Date dateTimeStartNoon = stringToDate("10:45", "HH:mm"); //buoi trua
+        Date dateTimeStartNoon = stringToDate("10:00", "HH:mm"); //buoi trua
         Date dateTimeEndNoon = stringToDate("12:30", "HH:mm");
 
-        Date dateTimeStartAfternoon = stringToDate("15:00", "HH:mm"); //buoi chieu
+        Date dateTimeStartAfternoon = stringToDate("14:00", "HH:mm"); //buoi chieu
         Date dateTimeEndAfternoon = stringToDate("17:00", "HH:mm");
 
         Date dateTimeStartNight = stringToDate("18:00", "HH:mm"); //buoi toi

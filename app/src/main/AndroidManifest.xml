@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.PaymentActivity"></activity>
         <activity android:name=".activity.FoodDetailActivity" />
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.BookDetailActivity" />
@@ -47,20 +48,17 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".activity.MainActivity" >
-
-        </activity>
-        <activity android:name=".SignInActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignInActivity"></activity>
     </application>
 
 </manifest>

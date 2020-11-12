@@ -31,6 +31,7 @@ public class Food implements Parcelable {
         image = in.readString();
         id = in.readString();
         price = in.readDouble();
+        like = in.readDouble();
     }
 
     public static final Creator<Food> CREATOR = new Creator<Food>() {
@@ -76,5 +77,6 @@ public class Food implements Parcelable {
         dest.writeString(image);
         dest.writeString(id);
         dest.writeDouble(price);
+        dest.writeDouble(like);
     }
 }

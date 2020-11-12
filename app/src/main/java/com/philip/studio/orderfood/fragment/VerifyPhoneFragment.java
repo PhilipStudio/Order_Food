@@ -82,7 +82,7 @@ public class VerifyPhoneFragment extends Fragment {
                 phone,
                 60,
                 TimeUnit.SECONDS,
-                (Activity) TaskExecutors.MAIN_THREAD,
+                (Activity)TaskExecutors.MAIN_THREAD,
                 mCallback
         );
     }

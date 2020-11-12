@@ -38,7 +38,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:id="@+id/text_view_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:padding="10dp"
-            android:text="@string/address"
+            android:text="Mời bạn chọn địa chỉ nhận hàng"
             android:textColor="@android:color/black"
             app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_ios"
             app:drawableStartCompat="@drawable/ic_baseline_place" />

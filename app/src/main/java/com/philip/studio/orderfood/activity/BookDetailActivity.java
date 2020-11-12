@@ -16,6 +16,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.model.Book;
 import com.philip.studio.orderfood.model.Restaurant;
@@ -35,6 +37,9 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
     Restaurant restaurant;
     String time, event;
     UserUtil userUtil;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference dataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,8 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
             String idUser = "0926471468";
             String idBook = restaurant.getIdRes() + idUser;
             Book book = new Book(idBook, restaurantID, idUser, time, 3, event, note);
+            Intent intentBook = new Intent(BookDetailActivity.this, PaymentActivity.class);
+            startActivity(intentBook);
         });
     }
 
@@ -88,6 +95,9 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dataRef = firebaseDatabase.getReference().child("Book");
     }
 
     @Override

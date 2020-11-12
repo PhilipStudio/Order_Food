@@ -1,7 +1,6 @@
 package com.philip.studio.orderfood.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ public class RestaurantFragment extends Fragment {
 
     double latitude = 18.664577;
     double longitude = 105.686241;
+    double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
     String category;
 
     public RestaurantFragment(String category) {
@@ -177,9 +177,14 @@ public class RestaurantFragment extends Fragment {
     }
 
     private double distanceCalculation(double a, double b, double c, double d) {
-        double result;
-        result = Math.sqrt((a - c) * (a - c) + (b - d) * (b - d));
-        Log.i("result", "" + result);
-        return result;
+        double latDistance = Math.toRadians(a - c);
+        double lngDistance = Math.toRadians(b - d);
+
+        double m = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(a)) * Math.cos(Math.toRadians(c))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+
+        double n = 2 * Math.atan2(Math.sqrt(m), Math.sqrt(1 - m));
+        return AVERAGE_RADIUS_OF_EARTH_KM * n;
     }
 }
