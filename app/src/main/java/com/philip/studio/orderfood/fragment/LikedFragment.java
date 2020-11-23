@@ -15,22 +15,22 @@ import com.philip.studio.orderfood.R;
 
 import io.realm.Realm;
 
-public class SavedFragment extends Fragment {
+public class LikedFragment extends Fragment {
 
-    RecyclerView rVListSaved;
+    RecyclerView rVListLiked;
 
     Realm realm;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_saved, container, false);
+        View view = inflater.inflate(R.layout.fragment_liked, container, false);
         Realm.init(getContext());
-        rVListSaved = view.findViewById(R.id.recycler_view_list_saved);
-        rVListSaved.setHasFixedSize(true);
+        rVListLiked = view.findViewById(R.id.recycler_view_list_liked);
+        rVListLiked.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        rVListSaved.setLayoutManager(layoutManager);
+        rVListLiked.setLayoutManager(layoutManager);
 
         loadListSaved();
         return view;

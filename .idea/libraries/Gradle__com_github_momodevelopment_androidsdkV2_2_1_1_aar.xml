@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.momodevelopment:androidsdkV2.2:1.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/190de9fd8fb06ed490fe4c9598353248/jetified-androidsdkV2.2-1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/190de9fd8fb06ed490fe4c9598353248/jetified-androidsdkV2.2-1.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/190de9fd8fb06ed490fe4c9598353248/jetified-androidsdkV2.2-1.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.momodevelopment/androidsdkV2.2/1.1/9f0ebcc41c136e24ebcc3a87cfc585a94c4cd9ad/androidsdkV2.2-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

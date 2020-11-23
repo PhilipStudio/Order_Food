@@ -18,14 +18,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class LoadRestaurantRealtime extends Worker {
+public class LoadRestaurantWorker extends Worker {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference dateRef = firebaseDatabase.getReference().child("Restaurant");
 
     ArrayList<Category> categories = new ArrayList<>();
 
-    public LoadRestaurantRealtime(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public LoadRestaurantWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_height="match_parent"
+<FrameLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.MapsActivity"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <fragment
@@ -12,6 +12,7 @@
         android:layout_height="match_parent"/>
 
     <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/search_bar"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -19,7 +20,7 @@
     <Button
         android:id="@+id/button_choose"
         android:textColor="@android:color/white"
-        android:text="Chon"
+        android:text="Chọn"
         android:padding="10dp"
         android:background="@drawable/custom_button_time"
         android:layout_gravity="bottom"

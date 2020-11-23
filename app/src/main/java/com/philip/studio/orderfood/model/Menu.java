@@ -6,10 +6,15 @@ import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class Menu {
+    private String idMenu;
     private String name;
     private ArrayList<Food> foods;
 
     public Menu(){}
+
+    public String getIdMenu() {
+        return idMenu;
+    }
 
     public ArrayList<Food> getFoods() {
         return foods;

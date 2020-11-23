@@ -27,6 +27,8 @@ public class OrderActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     ArrayList<Cart> arrayList;
+    String nameRestaurant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,8 @@ public class OrderActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null){
             arrayList = intent.getParcelableArrayListExtra("list");
+            nameRestaurant = intent.getStringExtra("nameRestaurant");
+
         }
     }
 
@@ -56,7 +60,7 @@ public class OrderActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new InformationOrderFragment();
+                    return new InformationOrderFragment(nameRestaurant, arrayList);
                 case 1:
                     return new ListFoodFragment(arrayList);
             }

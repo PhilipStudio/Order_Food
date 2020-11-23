@@ -3,6 +3,7 @@ package com.philip.studio.orderfood.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.philip.studio.orderfood.activity.MainActivity;
 import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import info.hoang8f.widget.FButton;
@@ -70,6 +72,7 @@ public class VerifyPhoneFragment extends Fragment {
             if (data.equals(code)) {
                 verifyCode(data, phoneNumber);
             } else {
+                Log.i("code", data);
                 Toast.makeText(getContext(), "Mã xác nhận không đúng", Toast.LENGTH_SHORT).show();
             }
         });
@@ -82,7 +85,7 @@ public class VerifyPhoneFragment extends Fragment {
                 phone,
                 60,
                 TimeUnit.SECONDS,
-                (Activity)TaskExecutors.MAIN_THREAD,
+                Objects.requireNonNull(getActivity()),
                 mCallback
         );
     }

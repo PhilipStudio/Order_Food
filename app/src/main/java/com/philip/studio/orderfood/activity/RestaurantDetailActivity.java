@@ -16,7 +16,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -57,13 +56,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import ru.nikartm.support.ImageBadgeView;
 
 public class RestaurantDetailActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
-    TextView txtName, txtAddress, txtStar, txtCategory, txtPriceRange;
+    TextView txtName, txtAddress, txtStar, txtCategory, txtPriceRange, txtNumberLiked;
     BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -74,7 +74,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     Restaurant restaurant;
     String time;
     UserUtil userUtil;
+    Realm realm;
     RealmResults<Cart> realmResults;
+    int dem = 0;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataCommentRef, dataResRef;
@@ -150,17 +152,22 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         });
         imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
         imgFavorite.setOnClickListener(v -> {
-            imgFavorite.setImageResource(R.drawable.ic_baseline_favorite);
+            dem++;
+            if (dem % 2 != 0) {
+                imgFavorite.setImageResource(R.drawable.ic_baseline_favorite);
+            } else {
+                imgFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
+            }
         });
     }
 
-    private void searchFoodFromMenu(String idRes){
+    private void searchFoodFromMenu(String idRes) {
         DatabaseReference dataRef = firebaseDatabase.getReference().child("Menu");
         dataRef.child(idRes).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> listName = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Menu menu = dataSnapshot.getValue(Menu.class);
                     listName.add(menu.getName());
                 }
@@ -212,18 +219,26 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         CartAdapter cartAdapter = new CartAdapter(realmResults, context);
         rvListCart.setAdapter(cartAdapter);
 
+        cartAdapter.setUpdateItemCartListener((pos, num) -> {
+            Toast.makeText(context, "Mon an: " + pos + ", so luong: " + num, Toast.LENGTH_SHORT).show();
+        });
+
         String total = displayTotalOrder(realmResults);
         txtTotal.setText(total);
 
         txtRemoveAll.setOnClickListener(v -> {
             Realm realm1 = Realm.getDefaultInstance();
-            realm1.executeTransaction(realm2 -> realm2.deleteAll());
+            realm1.executeTransaction(realm -> {
+                RealmResults<Cart> results = realm.where(Cart.class).equalTo("restaurantID", restaurant.getIdRes()).findAll();
+                Toast.makeText(context, "Deleted this cart !!!", Toast.LENGTH_SHORT).show();
+            });
         });
 
         ArrayList<Cart> arrayList = new ArrayList<>(realmResults);
 
         btnDelivery.setOnClickListener(v -> {
             Intent intent = new Intent(RestaurantDetailActivity.this, OrderActivity.class);
+            intent.putExtra("nameRestaurant", restaurant.getName());
             intent.putExtra("list", arrayList);
             startActivity(intent);
             dialog.cancel();
@@ -365,6 +380,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         imageBadgeView = findViewById(R.id.image_badge_view_shopping_cart);
         imgEvaluate = findViewById(R.id.image_view_evaluate);
         completeTextView = findViewById(R.id.auto_complete_text_view);
+        txtNumberLiked = findViewById(R.id.text_view_number_liked);
 
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

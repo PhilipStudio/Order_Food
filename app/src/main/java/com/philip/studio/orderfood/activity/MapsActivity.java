@@ -13,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.philip.studio.orderfood.R;
 
 import java.io.IOException;
@@ -22,10 +23,13 @@ import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private Geocoder geocoder;
-    private String nameAddress;
+    GoogleMap mMap;
+    Geocoder geocoder;
+    String nameAddress;
+    Address address;
+
     Button btnChoose;
+    MaterialSearchBar materialSearchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         btnChoose = findViewById(R.id.button_choose);
+        materialSearchBar = findViewById(R.id.search_bar);
 
         geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -60,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 e.printStackTrace();
             }
 
-            Address address = addressList.get(0);
+            address = addressList.get(0);
             nameAddress = address.getAddressLine(0);
 
             LatLng latLng1 = new LatLng(address.getLatitude(), address.getLongitude());

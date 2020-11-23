@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath 'com.google.gms:google-services:4.3.4'
         classpath "io.realm:realm-gradle-plugin:10.0.0-BETA.8"
         classpath 'com.android.support:multidex:1.0.3'

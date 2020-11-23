@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.adapter.SuggestionAdapter;
 import com.philip.studio.orderfood.model.Food;
@@ -30,10 +32,11 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     ArrayList<Food> arrayList;
     Food food;
-    int position;
+    int position, dem = 0;
     Realm realm;
-    boolean isClick = false;
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference dataRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +57,19 @@ public class FoodDetailActivity extends AppCompatActivity {
                     double price = food.getPrice();
                     String formattedPrice = formatter.format(price);
                     txtPrice.setText(formattedPrice + "đ");
-                    txtLike.setText(String.valueOf(food.getLike()));
+                    if (food.getLike() >= 1000){
+                        txtLike.setText("1k");
+                    }
+                    else{
+                        txtLike.setText(String.valueOf(food.getLike()));                    }
                 }
-
                 setUpRecyclerViewListSuggestion(arrayList);
             }
         }
 
         fabFavorite.setOnClickListener(v -> {
-            isClick = true;
-            if (isClick){
+            dem++;
+            if (dem % 2 != 0){
                 fabFavorite.setImageResource(R.drawable.ic_baseline_favorite);
             }
             else{
@@ -106,5 +112,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         txtLike = findViewById(R.id.text_view_like_food);
 
         realm = Realm.getDefaultInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dataRef = firebaseDatabase.getReference().child("Menu");
     }
 }

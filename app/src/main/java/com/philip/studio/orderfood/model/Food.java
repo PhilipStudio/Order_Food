@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey;
 
 @IgnoreExtraProperties
 public class Food implements Parcelable {
-
     @PrimaryKey
     private String id;
     private String name, image;

@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.callback.OnItemCategoryClickListener;
@@ -31,9 +29,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
     ArrayList<Category> categories;
     Context context;
     OnItemCategoryClickListener onItemCategoryClickListener;
-
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference dataRef = firebaseDatabase.getReference().child("Restaurant");
 
     public CategoryAdapter(ArrayList<Category> categories, Context context) {
         this.categories = categories;
@@ -119,12 +114,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
                 });
                 break;
             case 2:
-                holder.txtNameCategory.setText(categories.get(position).getNameCategory());
+                RealmResults<Cart> realmResults = realm.where(Cart.class).findAll();
+                if (realmResults.size() != 0){
+                    holder.txtNameCategory.setText(categories.get(position).getNameCategory());
+                }
+                else{
+                    holder.txtNameCategory.setVisibility(View.GONE);
+                }
                 holder.sRVListRestaurant1.setHasFixedSize(true);
                 LinearLayoutManager layoutManager1 = new LinearLayoutManager(context, ShimmerRecyclerViewX.HORIZONTAL, false);
                 holder.sRVListRestaurant1.setLayoutManager(layoutManager1);
 
-                RealmResults<Cart> realmResults = realm.where(Cart.class).findAll();
                 ArrayList<String> arrayList = new ArrayList<>();
                 arrayList.add(" ");
                 boolean isValid = false;
@@ -145,15 +145,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
                     }
                 }
 
-                ArrayList<Saved> savedArrayList = new ArrayList<>();
+                ArrayList<Saved> likedArrayList = new ArrayList<>();
                 for (int i=0; i < arrayList.size(); i++){
                     if(!arrayList.get(i).equals(" ")){
                         RealmResults<Cart> realmResults1 = realm.where(Cart.class).equalTo("restaurantID", arrayList.get(i)).findAll();
-                        savedArrayList.add(new Saved("Giỏ hàng " + i, realmResults1));
+                        likedArrayList.add(new Saved("Giỏ hàng " + i, realmResults1));
                     }
                 }
 
-                YourCartAdapter yourCartAdapter = new YourCartAdapter(savedArrayList, context);
+                YourCartAdapter yourCartAdapter = new YourCartAdapter(likedArrayList, context);
                 holder.sRVListRestaurant1.setAdapter(yourCartAdapter);
         }
     }
@@ -194,5 +194,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
 
         RestaurantCategoryAdapter adapter = new RestaurantCategoryAdapter(restaurants, context);
         shimmerRecyclerViewX.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

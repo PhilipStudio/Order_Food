@@ -17,7 +17,7 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_category_tuesday"
-        android:id="@+id/recycler_view_list_saved"
+        android:id="@+id/recycler_view_list_liked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

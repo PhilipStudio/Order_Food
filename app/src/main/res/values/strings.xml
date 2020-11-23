@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Order Food</string>
 
-    <string name="facebook_app_id">841797059892529</string>
-    <string name="fb_login_protocol_scheme">fb841797059892529</string>
+    <string name="facebook_app_id" translatable="false">841797059892529</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb841797059892529</string>
 
 
     <string name="sign_up">Đăng ký</string>
@@ -22,7 +22,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="enter_address">Nhập địa chỉ</string>
     <string name="liked">Đã thích</string>
-    <string name="saved">Đã lưu</string>
     <string name="add_address_your_house">Thêm địa chỉ công ty của bạn</string>
     <string name="add_address_your_company">Thêm địa chỉ nhà của bạn</string>
     <string name="restaurant">Nhà hàng</string>
@@ -80,4 +79,5 @@
     <string name="like">1,423k</string>
     <string name="content_promotion">Giảm 25% hoá đơn thúc ăn từ ngày 18/09 - đến ngày 2/1/2021</string>
     <string name="what_kind_of_food_your_like">Bạn thích loại thức ăn nào ?</string>
+    <string name="saved">Đã lưu</string>
 </resources>

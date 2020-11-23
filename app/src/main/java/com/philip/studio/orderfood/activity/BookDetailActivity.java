@@ -1,5 +1,6 @@
 package com.philip.studio.orderfood.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.paypal.android.sdk.payments.PaymentActivity;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.model.Book;
 import com.philip.studio.orderfood.model.Restaurant;
@@ -73,6 +75,11 @@ public class BookDetailActivity extends AppCompatActivity implements OnMapReadyC
             Intent intentBook = new Intent(BookDetailActivity.this, PaymentActivity.class);
             startActivity(intentBook);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initView() {
