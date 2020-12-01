@@ -32,6 +32,7 @@ import com.philip.studio.orderfood.adapter.CategoryAdapter;
 import com.philip.studio.orderfood.callback.OnItemCategoryClickListener;
 import com.philip.studio.orderfood.model.Category;
 import com.philip.studio.orderfood.model.Restaurant;
+import com.philip.studio.orderfood.util.LocationUtil;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
     OnItemCategoryClickListener onItemCategoryClickListener;
     String[] locationCategory = {"Tất cả", "Nhà hàng", "Quán ăn", "Cafe/Dessert", "Ăn vặt/vỉa hè"};
     ArrayList<Integer> arrayList = new ArrayList<>();
+    LocationUtil locationUtil;
 
     @Nullable
     @Override
@@ -65,6 +67,10 @@ public class HomeFragment extends Fragment {
         arrayList.add(R.drawable.food_banner);
         arrayList.add(R.drawable.food_banner_543);
         sliderView.setImages(arrayList);
+
+        if (locationUtil.getNameUserLocation() != null){
+            txtAddress.setText(locationUtil.getNameUserLocation());
+        }
 
         TimerTask task = sliderView.getTimerTask();
         Timer timer = new Timer();
@@ -274,6 +280,8 @@ public class HomeFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dataRef = firebaseDatabase.getReference().child("Restaurant");
+
+        locationUtil = new LocationUtil(getContext());
     }
 
     @Override

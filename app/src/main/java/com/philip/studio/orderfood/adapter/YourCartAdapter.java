@@ -64,7 +64,7 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
                 Glide.with(context).load(arrayList.get(position).getRealmResults().get(1).getProductImage()).into(holder.avatarImageView2);
                 holder.avatarImageView3.setVisibility(View.GONE);
                 break;
-            case 3:
+            default:
                 Glide.with(context).load(arrayList.get(position).getRealmResults().get(0).getProductImage()).into(holder.avatarImageView1);
                 Glide.with(context).load(arrayList.get(position).getRealmResults().get(1).getProductImage()).into(holder.avatarImageView2);
                 Glide.with(context).load(arrayList.get(position).getRealmResults().get(2).getProductImage()).into(holder.avatarImageView3);

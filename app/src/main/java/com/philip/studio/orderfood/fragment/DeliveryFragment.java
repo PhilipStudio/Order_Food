@@ -99,6 +99,7 @@ public class DeliveryFragment extends Fragment {
                 MenuAdapter menuAdapter = new MenuAdapter(menuArrayList, getContext(), idRes);
                 sRVListMenu.setAdapter(menuAdapter);
 
+
             }
 
             @Override
@@ -114,41 +115,4 @@ public class DeliveryFragment extends Fragment {
         txtTotal = view.findViewById(R.id.text_view_total);
         txtStatus = view.findViewById(R.id.text_view_status);
     }
-//
-//    private void setUpRecyclerView(final Realm realm) {
-//        rVListOrder.setHasFixedSize(true);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-//        rVListOrder.setLayoutManager(layoutManager);
-//
-//        results = realm.where(Cart.class).findAll();
-//        adapter = new CartAdapter(results, getContext());
-//        rVListOrder.setAdapter(adapter);
-//
-//        adapter.setClickListener(pos -> realm.executeTransaction(realm1 -> {
-//            RealmResults<Cart> realmResults = realm1.where(Cart.class)
-//                    .equalTo("productID", results.get(pos).getProductID()).findAll();
-//            realmResults.deleteAllFromRealm();
-//            adapter.notifyDataSetChanged();
-//            displayTotal(results);
-//        }));
-//
-//        adapter.setUpdateItemCartListener((pos, num) -> realm.executeTransaction(realm12 -> {
-//            RealmResults<Cart> cartRealmResults = realm12.where(Cart.class)
-//                    .equalTo("productID", results.get(pos).getProductID())
-//                    .findAll();
-//            cartRealmResults.get(0).setQuantity(num);
-//            adapter.notifyDataSetChanged();
-//            displayTotal(results);
-//        }));
-//    }
-//
-//    private void displayTotal(RealmResults<Cart> cartRealmResults) {
-//        int total = 0;
-//        Locale locale = new Locale("en", "US");
-//        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-//        for (Cart cart : cartRealmResults) {
-//            total += Integer.parseInt(cart.getPrice()) * Integer.parseInt(cart.getQuantity());
-//        }
-//        txtTotal.setText(numberFormat.format(total));
-//    }
 }

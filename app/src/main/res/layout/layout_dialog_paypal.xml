@@ -9,8 +9,9 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:textStyle="bold"
         android:textAllCaps="true"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
@@ -60,6 +61,48 @@
                 <TextView
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
+                    android:text="Name restaurant:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/text_view_name_restaurant"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/name_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:text="Address:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/text_view_address"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/black"
+                    android:text="@string/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:text="Amount:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -68,7 +111,7 @@
                     android:id="@+id/text_view_amount"
                     android:layout_marginLeft="10dp"
                     android:textColor="@android:color/black"
-                    android:text="10.000:"
+                    android:text="@string/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -86,10 +129,11 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:textAllCaps="true"
                     android:id="@+id/text_view_status"
                     android:layout_marginLeft="10dp"
                     android:textColor="@android:color/black"
-                    android:text="success:"
+                    android:text="success"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

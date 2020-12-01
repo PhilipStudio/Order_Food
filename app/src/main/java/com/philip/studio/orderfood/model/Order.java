@@ -9,24 +9,26 @@ import io.realm.RealmResults;
 @IgnoreExtraProperties
 public class Order {
     private String idOrder;
+    private String paymentId;
     private String phone;
     private String name;
     private String address;
     private String total;
-    private RealmResults<Cart> results;
+    private ArrayList<Cart> arrayList;
     private String status;
 
     public Order() {
     }
 
-    public Order(String idOrder, String phone, String name, String address, String total, RealmResults<Cart> results) {
+    public Order(String idOrder, String paymentId, String phone, String name, String address, String total, ArrayList<Cart> arrayList, String status) {
         this.idOrder = idOrder;
+        this.paymentId = paymentId;
         this.phone = phone;
         this.name = name;
         this.address = address;
         this.total = total;
-        this.results = results;
-        this.status = "0"; //default is 0; 0:order; 1:shipping; 2:shipped
+        this.arrayList = arrayList;
+        this.status = status;
     }
 
     public void setStatus(String status) {
@@ -35,6 +37,10 @@ public class Order {
 
     public String getIdOrder() {
         return idOrder;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
     }
 
     public String getPhone() {
@@ -53,11 +59,25 @@ public class Order {
         return total;
     }
 
-    public RealmResults<Cart> getResults() {
-        return results;
+    public ArrayList<Cart> getArrayList() {
+        return arrayList;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "idOrder='" + idOrder + '\'' +
+                ", paymentId='" + paymentId + '\'' +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", total='" + total + '\'' +
+                ", arrayList=" + arrayList +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -53,8 +53,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.numberButton.setNumber(realmResults.get(position).getQuantity());
         Glide.with(context).load(realmResults.get(position).getProductImage()).into(holder.imageView);
 
-        String total = displayTotal(realmResults.get(position).getPrice(), realmResults.get(position).getQuantity()) + "đ";
-        holder.txtFoodPrice.setText(total);
+        holder.txtFoodPrice.setText(displayPrice(realmResults.get(position).getPrice()));
 
         holder.numberButton.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
             String data = holder.numberButton.getNumber();
@@ -84,10 +83,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
     }
 
-    private String displayTotal(String str1, String str2) {
+    private String displayPrice(String str) {
         NumberFormat formatter = new DecimalFormat("#,###");
-        double price = Double.parseDouble(str1) * Double.parseDouble(str2);
-        return formatter.format(price);
+        double price = Double.parseDouble(str);
+        return formatter.format(price) + "đ";
     }
 
     public interface OnCartItemClickListener {

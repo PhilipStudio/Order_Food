@@ -72,6 +72,10 @@ public class Cart extends RealmObject implements Parcelable {
         return productImage;
     }
 
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public int describeContents() {
         return 0;

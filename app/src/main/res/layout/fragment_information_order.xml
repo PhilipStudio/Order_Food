@@ -71,7 +71,7 @@
             android:textStyle="bold"
             android:textColor="#13568A"
             android:textAllCaps="true"
-            android:id="@+id/radio_button_airpay"
+            android:id="@+id/radio_button_paypal"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_baseline_local_parking"
             android:layout_marginEnd="10dp"
@@ -83,14 +83,16 @@
             android:layout_height="wrap_content"/>
 
         <RadioButton
-            android:id="@+id/radio_button_money"
+            android:drawableLeft="@drawable/ic_baseline_money"
+            android:textColor="@color/momo_color"
+            android:textAlignment="center"
+            android:id="@+id/radio_button_momo"
             android:drawablePadding="5dp"
-            android:drawableStart="@drawable/ic_baseline_money"
             android:layout_marginStart="10dp"
             android:background="@drawable/custom_button_payment"
             android:layout_weight="1"
             android:padding="15dp"
-            android:text="Tiền mặt"
+            android:text="MOMO"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
     </RadioGroup>

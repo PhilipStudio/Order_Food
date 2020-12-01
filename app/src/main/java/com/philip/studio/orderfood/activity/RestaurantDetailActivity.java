@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import ru.nikartm.support.ImageBadgeView;
 
@@ -72,7 +71,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     AutoCompleteTextView completeTextView;
 
     Restaurant restaurant;
-    String time;
+    String time, total;
     UserUtil userUtil;
     Realm realm;
     RealmResults<Cart> realmResults;
@@ -155,6 +154,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             dem++;
             if (dem % 2 != 0) {
                 imgFavorite.setImageResource(R.drawable.ic_baseline_favorite);
+
             } else {
                 imgFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
             }
@@ -219,26 +219,37 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         CartAdapter cartAdapter = new CartAdapter(realmResults, context);
         rvListCart.setAdapter(cartAdapter);
 
-        cartAdapter.setUpdateItemCartListener((pos, num) -> {
-            Toast.makeText(context, "Mon an: " + pos + ", so luong: " + num, Toast.LENGTH_SHORT).show();
-        });
+        realm = Realm.getDefaultInstance();
+        cartAdapter.setUpdateItemCartListener((pos, num) -> realm.executeTransaction(realm -> {
+            RealmResults<Cart> cartRealmResults = realm.where(Cart.class)
+                    .equalTo("productID", realmResults.get(pos).getProductID())
+                    .findAll();
+            cartRealmResults.get(0).setQuantity(num);
+            cartAdapter.notifyDataSetChanged();
+            total = displayTotalOrder(realmResults);
+            txtTotal.setText(total);
+        }));
 
-        String total = displayTotalOrder(realmResults);
+        total = displayTotalOrder(realmResults);
         txtTotal.setText(total);
 
         txtRemoveAll.setOnClickListener(v -> {
             Realm realm1 = Realm.getDefaultInstance();
             realm1.executeTransaction(realm -> {
                 RealmResults<Cart> results = realm.where(Cart.class).equalTo("restaurantID", restaurant.getIdRes()).findAll();
-                Toast.makeText(context, "Deleted this cart !!!", Toast.LENGTH_SHORT).show();
+                results.deleteAllFromRealm();
+                cartAdapter.notifyDataSetChanged();
+                total = displayTotalOrder(realmResults);
+                txtTotal.setText(total);
             });
+            displayTotalOrder(realmResults);
         });
 
         ArrayList<Cart> arrayList = new ArrayList<>(realmResults);
 
         btnDelivery.setOnClickListener(v -> {
             Intent intent = new Intent(RestaurantDetailActivity.this, OrderActivity.class);
-            intent.putExtra("nameRestaurant", restaurant.getName());
+            intent.putExtra("restaurant", restaurant);
             intent.putExtra("list", arrayList);
             startActivity(intent);
             dialog.cancel();

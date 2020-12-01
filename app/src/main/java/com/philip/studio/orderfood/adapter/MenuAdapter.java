@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 import com.philip.studio.orderfood.R;
+import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Food;
 import com.philip.studio.orderfood.model.Menu;
 
@@ -25,6 +26,7 @@ public class MenuAdapter extends ShimmerRecyclerViewX.Adapter<MenuAdapter.ViewHo
     Context context;
     String idRes;
 
+    OnItemMenuClickListener listener;
     Realm realm = Realm.getDefaultInstance();
 
     public MenuAdapter(ArrayList<Menu> arrayList, Context context, String idRes) {
@@ -54,9 +56,18 @@ public class MenuAdapter extends ShimmerRecyclerViewX.Adapter<MenuAdapter.ViewHo
         holder.sRVListFood.setAdapter(foodAdapter);
         foodAdapter.setOnItemFoodClickListener(cart -> {
             realm.executeTransaction(realm2 -> {
-                realm2.insert(cart);
-                Toast.makeText(context, "Insert food success", Toast.LENGTH_SHORT).show();
+                Cart cart1 = realm.where(Cart.class).equalTo("productID", cart.getProductID()).findFirst();
+                if (cart1 != null) {
+                    Toast.makeText(context, "Item đã tồn tại", Toast.LENGTH_SHORT).show();
+                } else {
+                    realm2.insert(cart);
+                    Toast.makeText(context, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                }
             });
+
+            if (listener != null) {
+                listener.onItemClick("Chafo ban hahaha");
+            }
         });
 
         if (position == 0) {
@@ -67,9 +78,18 @@ public class MenuAdapter extends ShimmerRecyclerViewX.Adapter<MenuAdapter.ViewHo
 
             foodFavoriteAdapter.setOnItemFoodClickListener(cart -> {
                 realm.executeTransaction(realm1 -> {
-                    realm1.insert(cart);
-                    Toast.makeText(context, "Insert favorite success", Toast.LENGTH_SHORT).show();
+                    Cart cart1 = realm.where(Cart.class).equalTo("productID", cart.getProductID()).findFirst();
+                    if (cart1 != null) {
+                        Toast.makeText(context, "Item đã tồn tại", Toast.LENGTH_SHORT).show();
+                    } else {
+                        realm1.insert(cart);
+                        Toast.makeText(context, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                    }
                 });
+
+                if (listener != null) {
+                    listener.onItemClick("Chafo ban hahaha");
+                }
             });
         }
     }
@@ -90,5 +110,9 @@ public class MenuAdapter extends ShimmerRecyclerViewX.Adapter<MenuAdapter.ViewHo
             txtNameMenu = itemView.findViewById(R.id.item_name_menu);
             sRVListFood = itemView.findViewById(R.id.item_list_food);
         }
+    }
+
+    public interface OnItemMenuClickListener {
+        void onItemClick(String content);
     }
 }

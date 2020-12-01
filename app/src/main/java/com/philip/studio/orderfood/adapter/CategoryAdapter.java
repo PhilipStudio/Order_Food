@@ -29,6 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
     ArrayList<Category> categories;
     Context context;
     OnItemCategoryClickListener onItemCategoryClickListener;
+    ArrayList<Restaurant> restaurants = new ArrayList<>();
 
     public CategoryAdapter(ArrayList<Category> categories, Context context) {
         this.categories = categories;
@@ -91,12 +92,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
                     public void onTabSelected(TabLayout.Tab tab) {
                         switch (tab.getPosition()) {
                             case 0:
+                                restaurants.clear();
                                 loadListRestaurant(holder.sRVListRestaurant2, "Thức ăn nhanh", context);
                                 break;
                             case 1:
+                                restaurants.clear();
                                 loadListRestaurant(holder.sRVListRestaurant2, "Đồ uống", context);
                                 break;
                             case 2:
+                                restaurants.clear();
                                 loadListRestaurant(holder.sRVListRestaurant2, "Món ăn Việt", context);
                                 break;
                         }
@@ -185,7 +189,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, ShimmerRecyclerViewX.VERTICAL, false);
         shimmerRecyclerViewX.setLayoutManager(layoutManager);
         ArrayList<Restaurant> arrayList = categories.get(2).getRestaurants();
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
         for (Restaurant restaurant : arrayList) {
             if (restaurant.getCategory().equals(text)) {
                 restaurants.add(restaurant);
@@ -194,6 +197,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MenuVi
 
         RestaurantCategoryAdapter adapter = new RestaurantCategoryAdapter(restaurants, context);
         shimmerRecyclerViewX.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 }

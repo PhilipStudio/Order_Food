@@ -52,8 +52,8 @@ public class ShippingFragment extends Fragment implements OnMapReadyCallback, Di
     }
 
     private void sendRequest() {
-        String origin = "Truong Dai hoc Vinh";
-        String destination = "Buu dien tinh Nghe An";
+        String origin = "Trường Đại học Vinh";
+        String destination = "Bưu Điện Trung Tâm Tp Vinh";
         new DirectionFinder((DirectionFinderListener) getContext(), origin, destination).execute();
     }
 

@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.jd-alexander:android-flat-button:v1.1@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a12d376a07ad2b132c6a94b83765e94e/jetified-android-flat-button-v1.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a12d376a07ad2b132c6a94b83765e94e/jetified-android-flat-button-v1.1/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a12d376a07ad2b132c6a94b83765e94e/jetified-android-flat-button-v1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a12d376a07ad2b132c6a94b83765e94e/jetified-android-flat-button-v1.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a12d376a07ad2b132c6a94b83765e94e/jetified-android-flat-button-v1.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

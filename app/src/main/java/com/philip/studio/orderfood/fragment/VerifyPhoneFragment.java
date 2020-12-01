@@ -72,7 +72,6 @@ public class VerifyPhoneFragment extends Fragment {
             if (data.equals(code)) {
                 verifyCode(data, phoneNumber);
             } else {
-                Log.i("code", data);
                 Toast.makeText(getContext(), "Mã xác nhận không đúng", Toast.LENGTH_SHORT).show();
             }
         });
@@ -133,6 +132,8 @@ public class VerifyPhoneFragment extends Fragment {
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationID = s;
+
+            Log.d("xxxxxxxxxxxxxx","send success");
         }
 
         @Override
@@ -142,6 +143,8 @@ public class VerifyPhoneFragment extends Fragment {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
+            Log.d("xxxxxxxxxxxxxx",e.toString());
+
             Toast.makeText(getContext(), "Đã xảy ra lỗi với mã xác nhận của bạn" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     };
