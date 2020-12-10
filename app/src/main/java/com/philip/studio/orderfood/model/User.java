@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class User implements Parcelable {
+    private String idUser;
+    private String email;
+    private String password;
     private String phoneNumber;
     private String name;
     private String gender;
@@ -19,6 +22,14 @@ public class User implements Parcelable {
     private ArrayList<String> listFoodsFavorite;
 
     public User() {
+    }
+
+    public User(String idUser, String email, String password, String name, String avatar) {
+        this.idUser = idUser;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.avatar = avatar;
     }
 
     public User(String phoneNumber, String name, String gender, String birthday, String address, String avatar) {
@@ -37,6 +48,9 @@ public class User implements Parcelable {
         avatar = in.readString();
         gender = in.readString();
         birthday = in.readString();
+        idUser = in.readString();
+        email = in.readString();
+        password = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -50,6 +64,18 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -96,5 +122,8 @@ public class User implements Parcelable {
         dest.writeString(avatar);
         dest.writeString(gender);
         dest.writeString(birthday);
+        dest.writeString(idUser);
+        dest.writeString(email);
+        dest.writeString(password);
     }
 }

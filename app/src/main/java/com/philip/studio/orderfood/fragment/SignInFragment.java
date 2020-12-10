@@ -3,11 +3,10 @@ package com.philip.studio.orderfood.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,7 @@ import com.facebook.login.LoginResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.philip.studio.orderfood.R;
-import com.philip.studio.orderfood.util.UserUtil;
+import com.philip.studio.orderfood.model.User;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONException;
@@ -38,14 +37,13 @@ public class SignInFragment extends Fragment {
     FButton fButtonContinue;
     MaterialEditText materialEdtPhone;
     TextView txtCountryCode;
-    Button btnSignInFacebook, btnSignInGoogle;
+    ImageView imgSignInFacebook, imgSignInEmail;
+
+    String phoneNumber;
+    CallbackManager callbackManager;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataUserRef;
-
-    UserUtil userUtil;
-    String phoneNumber;
-    CallbackManager callbackManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,14 +61,18 @@ public class SignInFragment extends Fragment {
                                 String firstName = object.getString("first_name");
                                 String lastName = object.getString("last_name");
                                 String nickname = firstName + " " + lastName;
+                                String gender = object.getString("gender");
+                                String birthday = object.getString("birthday");
+                                String address = object.getString("hometown");
                                 String profile_pic = "http://graph.facebook.com/" + id + "/picture?type=normal";
-                                Log.i("avatar", profile_pic);
+                                User user = new User(id, nickname, gender, birthday, address, profile_pic);
+                                dataUserRef.child(id).setValue(user);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         });
                 Bundle parameter = new Bundle();
-                parameter.putString("fields", "first_name, last_name, email, id");
+                parameter.putString("fields", "first_name, last_name, email, id, birthday, gender, hometown");
                 request.setParameters(parameter);
                 request.executeAsync();
             }
@@ -114,10 +116,17 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        btnSignInFacebook.setOnClickListener(v -> {
+        imgSignInFacebook.setOnClickListener(v -> {
             LoginManager.getInstance()
                     .logInWithReadPermissions(SignInFragment.this,
-                            Arrays.asList("user_photos", "email", "user_birthday", "public_profile"));
+                            Arrays.asList("user_gender", "user_location", "user_photos", "email", "user_birthday", "public_profile"));
+        });
+
+        imgSignInEmail.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout_container, new SignInWithEmailFragment())
+                    .commit();
         });
 
         return view;
@@ -150,12 +159,10 @@ public class SignInFragment extends Fragment {
         fButtonContinue = view.findViewById(R.id.f_button_continue);
         materialEdtPhone = view.findViewById(R.id.material_edit_text_phone_number);
         txtCountryCode = view.findViewById(R.id.text_view_country_code);
-        btnSignInFacebook = view.findViewById(R.id.button_sign_in_with_facebook);
-        btnSignInGoogle = view.findViewById(R.id.button_sign_in_with_google);
+        imgSignInFacebook = view.findViewById(R.id.image_view_sign_in_with_facebook);
+        imgSignInEmail = view.findViewById(R.id.image_view_sign_in_with_email);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         dataUserRef = firebaseDatabase.getReference().child("User");
-
-        userUtil = new UserUtil(getContext());
     }
 }

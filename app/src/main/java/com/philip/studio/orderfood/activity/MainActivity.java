@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements OnItemCategoryCli
         Intent intent = getIntent();
         if (intent != null){
             User user = intent.getParcelableExtra("user");
-            userUtil.setUser(user);
+            if (user != null){
+                userUtil.setUser(user);
+            }
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(listener);

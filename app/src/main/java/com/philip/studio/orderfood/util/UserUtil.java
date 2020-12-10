@@ -18,7 +18,7 @@ public class UserUtil {
         String userJson = gson.toJson(user);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user", userJson);
-        editor.apply();
+        editor.commit();
     }
 
     public User getUser(){

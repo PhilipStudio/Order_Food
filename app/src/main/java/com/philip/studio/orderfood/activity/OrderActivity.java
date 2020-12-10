@@ -14,7 +14,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ import com.philip.studio.orderfood.fragment.ListFoodFragment;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Order;
 import com.philip.studio.orderfood.model.Restaurant;
+import com.philip.studio.orderfood.model.User;
+import com.philip.studio.orderfood.util.UserUtil;
 
 import java.util.ArrayList;
 
@@ -38,9 +42,14 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
+    TextView txtName, txtAddress;
+    ImageView imgChooseAddress;
 
     ArrayList<Cart> arrayList;
     Restaurant restaurant;
+    UserUtil userUtil;
+    private static final int REQUEST_CODE = 123;
+    String address;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference dataRef = firebaseDatabase.getReference().child("Order");
@@ -53,6 +62,18 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
 
         initView();
 
+        if (userUtil.getUser() != null){
+            User user = userUtil.getUser();
+            txtName.setText(user.getName());
+            String address = user.getAddress();
+            if (!TextUtils.isEmpty(address)){
+                txtAddress.setText(user.getAddress());
+            }
+            else{
+                txtAddress.setText("Mời chọn địa chỉ nhận hàng");
+            }
+        }
+
         toolbar.setNavigationOnClickListener(v -> finish());
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(pagerAdapter);
@@ -62,6 +83,23 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         if (intent != null){
             arrayList = intent.getParcelableArrayListExtra("list");
             restaurant = intent.getParcelableExtra("restaurant");
+        }
+
+        imgChooseAddress.setOnClickListener(v -> {
+            Intent intent1 = new Intent(OrderActivity.this, MapsActivity.class);
+            startActivityForResult(intent1, REQUEST_CODE);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            if (requestCode == REQUEST_CODE && data != null){
+                address = data.getStringExtra("address");
+                txtAddress.setText(address);
+            }
         }
     }
 
@@ -142,7 +180,11 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
+        txtName = findViewById(R.id.text_view_name_user);
+        txtAddress = findViewById(R.id.text_view_address);
+        imgChooseAddress = findViewById(R.id.image_view_choose_address);
 
         arrayList = new ArrayList<>();
+        userUtil = new UserUtil(this);
     }
 }
