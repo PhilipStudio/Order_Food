@@ -51,9 +51,13 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtName.setText(arrayList.get(position).getName());
+        holder.txtNameCart.setText(arrayList.get(position).getName());
+        if (arrayList.get(position).getRealmResults().get(0) != null){
+            holder.txtAddress.setText(arrayList.get(position).getRealmResults().get(0).getAddress());
+            holder.txtName.setText(arrayList.get(position).getRealmResults().get(0).getNameRestaurant());
+        }
 
-        switch (arrayList.get(position).getRealmResults().size()){
+        switch (arrayList.get(position).getRealmResults().size()) {
             case 1:
                 Glide.with(context).load(arrayList.get(position).getRealmResults().get(0).getProductImage()).into(holder.avatarImageView1);
                 holder.avatarImageView2.setVisibility(View.GONE);
@@ -80,9 +84,9 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtName, txtAddress, txtTotal;
+        TextView txtName, txtAddress, txtTotal, txtNameCart;
         AvatarImageView avatarImageView1, avatarImageView2, avatarImageView3;
 
         public ViewHolder(@NonNull View itemView) {
@@ -91,6 +95,7 @@ public class YourCartAdapter extends RecyclerView.Adapter<YourCartAdapter.ViewHo
             txtName = itemView.findViewById(R.id.item_name_restaurant);
             txtAddress = itemView.findViewById(R.id.item_address_restaurant);
             txtTotal = itemView.findViewById(R.id.item_total);
+            txtNameCart = itemView.findViewById(R.id.item_name_cart);
             avatarImageView1 = itemView.findViewById(R.id.item_avatar_image_view_one);
             avatarImageView2 = itemView.findViewById(R.id.item_avatar_image_view_two);
             avatarImageView3 = itemView.findViewById(R.id.item_avatar_image_view_three);

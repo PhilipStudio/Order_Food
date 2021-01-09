@@ -4,6 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Comment {
+    private String idUser;
     private String avatar;
     private String nickname;
     private String content;
@@ -13,12 +14,17 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String avatar, String nickname, String content, String time, float star) {
+    public Comment(String idUser, String avatar, String nickname, String content, String time, float star) {
+        this.idUser = idUser;
         this.avatar = avatar;
         this.nickname = nickname;
         this.content = content;
         this.time = time;
         this.star = star;
+    }
+
+    public String getIdUser() {
+        return idUser;
     }
 
     public String getAvatar() {

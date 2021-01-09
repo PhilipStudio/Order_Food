@@ -49,14 +49,14 @@ public class UserFragment extends Fragment {
         String name = userUtil.getUser().getName();
         txtNameUser.setText(name);
 
-//        String avatar = userUtil.getUser().getAvatar();
-//        if (TextUtils.isEmpty(avatar) || avatar.equals(" ")) {
-//            avatarImageView.setState(AvatarImageView.SHOW_INITIAL);
-//            avatarImageView.setText(userUtil.getUser().getName());
-//        } else {
-//            avatarImageView.setState(AvatarImageView.SHOW_IMAGE);
-//            Glide.with(getContext()).load(avatar).into(avatarImageView);
-//        }
+        String avatar = userUtil.getUser().getAvatar();
+        if (TextUtils.isEmpty(avatar) || avatar.equals(" ")) {
+            avatarImageView.setState(AvatarImageView.SHOW_INITIAL);
+            avatarImageView.setText(userUtil.getUser().getName());
+        } else {
+            avatarImageView.setState(AvatarImageView.SHOW_IMAGE);
+            Glide.with(getContext()).load(avatar).into(avatarImageView);
+        }
 
         avatarImageView.setOnClickListener(v -> openGallery());
 

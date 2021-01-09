@@ -14,11 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.activity.FoodDetailActivity;
 import com.philip.studio.orderfood.callback.OnItemFoodClickListener;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Food;
+import com.philip.studio.orderfood.model.Restaurant;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,6 +37,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     String idRes;
 
     OnItemFoodClickListener onItemFoodClickListener;
+
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference dataRef = firebaseDatabase.getReference().child("Restaurant");
 
     public FoodAdapter(ArrayList<Food> arrayList, Context context, String idRes) {
         this.arrayList = arrayList;
@@ -58,15 +67,30 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         String formattedPrice = formatter.format(price);
         holder.txtPrice.setText(formattedPrice + "đ");
         holder.numberButton.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
-            if(onItemFoodClickListener != null){
-                Cart cart = new Cart(arrayList.get(position).getId(),
-                        idRes,
-                        arrayList.get(position).getName(),
-                        arrayList.get(position).getImage(),
-                        holder.numberButton.getNumber(),
-                        String.valueOf(arrayList.get(position).getPrice())
-                );
-                onItemFoodClickListener.onItemClick(cart);
+            if (onItemFoodClickListener != null) {
+                dataRef.child(idRes).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                        if (restaurant != null) {
+                            Cart cart = new Cart(arrayList.get(position).getId(),
+                                    idRes,
+                                    restaurant.getName(),
+                                    restaurant.getAddress(),
+                                    arrayList.get(position).getName(),
+                                    arrayList.get(position).getImage(),
+                                    holder.numberButton.getNumber(),
+                                    String.valueOf(arrayList.get(position).getPrice())
+                            );
+                            onItemFoodClickListener.onItemClick(cart);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
     }

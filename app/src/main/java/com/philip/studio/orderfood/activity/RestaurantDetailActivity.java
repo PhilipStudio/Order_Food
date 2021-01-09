@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,7 +41,7 @@ import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.adapter.CartAdapter;
 import com.philip.studio.orderfood.fragment.CommentFragment;
 import com.philip.studio.orderfood.fragment.DeliveryFragment;
-import com.philip.studio.orderfood.fragment.InformationFragment;
+import com.philip.studio.orderfood.fragment.InformationRestaurantFragment;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Comment;
 import com.philip.studio.orderfood.model.Menu;
@@ -62,11 +63,11 @@ import ru.nikartm.support.ImageBadgeView;
 public class RestaurantDetailActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
-    TextView txtName, txtAddress, txtStar, txtCategory, txtPriceRange, txtNumberLiked;
+    TextView txtName, txtAddress, txtStar, txtCategory, txtPriceRange;
     BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
     TabLayout tabLayout;
     ViewPager viewPager;
-    ImageView imgLogo, imgFavorite, imgEvaluate;
+    ImageView imgLogo, imgEvaluate;
     ImageBadgeView imageBadgeView;
     AutoCompleteTextView completeTextView;
 
@@ -75,7 +76,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     UserUtil userUtil;
     Realm realm;
     RealmResults<Cart> realmResults;
-    int dem = 0;
+    int stars = 0;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataCommentRef, dataResRef;
@@ -113,7 +114,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         searchFoodFromMenu(restaurant.getIdRes());
 
         User user = userUtil.getUser();
-        imgFavorite.setOnClickListener(v -> showDialogFavorite(restaurant, user));
+        imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
 
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(pagerAdapter);
@@ -150,15 +151,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
         imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
-        imgFavorite.setOnClickListener(v -> {
-            dem++;
-            if (dem % 2 != 0) {
-                imgFavorite.setImageResource(R.drawable.ic_baseline_favorite);
-
-            } else {
-                imgFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
-            }
-        });
     }
 
     private void searchFoodFromMenu(String idRes) {
@@ -243,6 +235,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 txtTotal.setText(total);
             });
             displayTotalOrder(realmResults);
+            dialog.cancel();
+            imageBadgeView.setBadgeValue(0);
         });
 
         ArrayList<Cart> arrayList = new ArrayList<>(realmResults);
@@ -275,6 +269,22 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ratingBar = dialog.findViewById(R.id.rating_bar);
         txtStatus = dialog.findViewById(R.id.text_view_status);
 
+        dataCommentRef.child(restaurant.getIdRes()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Comment comment = snapshot.getValue(Comment.class);
+                if (comment != null){
+                    ratingBar.setRating((float)comment.getStar());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        txtStatus.setVisibility(View.GONE);
+
         if (TextUtils.isEmpty(user.getAvatar()) || user.getAvatar().equals(" ")) {
             avatarImageView.setState(AvatarImageView.SHOW_INITIAL);
             avatarImageView.setText(user.getName());
@@ -288,18 +298,28 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             switch ((int) ratingBar1.getRating()) {
                 case 1:
+                    stars = 1;
+                    txtStatus.setVisibility(View.VISIBLE);
                     txtStatus.setText("Rất tệ");
                     break;
                 case 2:
+                    stars = 2;
+                    txtStatus.setVisibility(View.VISIBLE);
                     txtStatus.setText("Tệ");
                     break;
                 case 3:
+                    stars = 3;
+                    txtStatus.setVisibility(View.VISIBLE);
                     txtStatus.setText("Trung bình");
                     break;
                 case 4:
+                    stars = 4;
+                    txtStatus.setVisibility(View.VISIBLE);
                     txtStatus.setText("Tốt");
                     break;
                 case 5:
+                    stars = 5;
+                    txtStatus.setVisibility(View.VISIBLE);
                     txtStatus.setText("Tuyệt vời");
                     break;
             }
@@ -312,7 +332,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             } else {
                 String dateTime = new SimpleDateFormat("HH:mm dd/MM/yyyy").format(new Date());
                 String idComment = String.valueOf(System.currentTimeMillis());
-                Comment comment = new Comment(user.getAvatar(), user.getName(), content, dateTime, 5);
+                Comment comment = new Comment("1", user.getAvatar(), user.getName(), content, dateTime, stars);
                 writeCommentForRestaurant(restaurant.getIdRes(), idComment, comment);
                 dialog.cancel();
             }
@@ -337,7 +357,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 case 1:
                     return new CommentFragment(restaurant.getIdRes(), restaurant.getStar());
                 case 2:
-                    return new InformationFragment(restaurant.getAddress(), restaurant.getLocation());
+                    return new InformationRestaurantFragment(restaurant.getAddress(), restaurant.getLocation());
             }
             return null;
         }
@@ -386,12 +406,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         imgLogo = findViewById(R.id.image_view_logo);
         viewPager = findViewById(R.id.view_pager_container);
         tabLayout = findViewById(R.id.tab_layout);
-        imgFavorite = findViewById(R.id.image_view_favorite);
         txtPriceRange = findViewById(R.id.text_view_price_range);
         imageBadgeView = findViewById(R.id.image_badge_view_shopping_cart);
         imgEvaluate = findViewById(R.id.image_view_evaluate);
         completeTextView = findViewById(R.id.auto_complete_text_view);
-        txtNumberLiked = findViewById(R.id.text_view_number_liked);
 
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

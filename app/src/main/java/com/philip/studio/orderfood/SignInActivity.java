@@ -4,18 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.philip.studio.orderfood.activity.MainActivity;
 import com.philip.studio.orderfood.fragment.SignInFragment;
-import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class SignInActivity extends AppCompatActivity {
 

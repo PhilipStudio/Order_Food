@@ -23,14 +23,12 @@
     <RatingBar
         android:id="@+id/rating_bar"
         android:layout_gravity="center"
-        android:stepSize="1"
         android:numStars="5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/text_view_status"
-        android:text="@string/great"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

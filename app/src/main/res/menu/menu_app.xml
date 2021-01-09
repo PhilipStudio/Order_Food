@@ -8,10 +8,6 @@
         android:title="@string/order"
         android:icon="@drawable/ic_baseline_assignment"/>
 
-    <item android:id="@+id/liked"
-        android:title="@string/liked"
-        android:icon="@drawable/ic_baseline_bookmark"/>
-
     <item android:id="@+id/me"
         android:title="@string/me"
         android:icon="@drawable/ic_baseline_account_circle"/>

@@ -40,6 +40,8 @@ public class ListFoodFragment extends Fragment {
         FoodInCartAdapter adapter = new FoodInCartAdapter(arrayList, getContext());
         rVListFood.setAdapter(adapter);
 
+
+
         return view;
     }
 }

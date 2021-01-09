@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +15,12 @@ import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.model.Cart;
+import com.zerobranch.layout.SwipeLayout;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -71,7 +74,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         TextView txtFoodName, txtFoodPrice;
         ElegantNumberButton numberButton;
-        ImageView imageView;
+        ImageView imageView, imgDelete;
+        SwipeLayout swipeLayout;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +84,35 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             txtFoodPrice = itemView.findViewById(R.id.item_total);
             numberButton = itemView.findViewById(R.id.item_number_button);
             imageView = itemView.findViewById(R.id.item_food_image);
+            swipeLayout = itemView.findViewById(R.id.swipe_layout);
+            imgDelete = itemView.findViewById(R.id.item_delete);
+
+            imgDelete.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                String id = realmResults.get(pos).getProductID();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(realm1 -> {
+                    RealmResults<Cart> realmResults1 = realm.where(Cart.class).equalTo("productID", id).findAll();
+                    if (realmResults1.size() != 0){
+                        realmResults1.deleteFirstFromRealm();
+                    }
+                    Toast.makeText(context, "Removed successfully", Toast.LENGTH_SHORT).show();
+                });
+            });
+
+            swipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
+                @Override
+                public void onOpen(int direction, boolean isContinuous) {
+                    if (direction == SwipeLayout.LEFT && isContinuous){
+                        Toast.makeText(context, "Swipe left", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onClose() {
+
+                }
+            });
         }
     }
 

@@ -35,7 +35,7 @@
         <RelativeLayout
             android:layout_marginStart="5dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="80dp">
             <ImageView
                 android:padding="10dp"
                 android:id="@+id/image_view_choose_address"
@@ -61,18 +61,6 @@
                 android:layout_below="@id/text_view_name_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/text_view_edit"
-                android:layout_marginEnd="10dp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/edit"
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
         <View
@@ -84,6 +72,7 @@
             android:layout_height="0.5dp"/>
 
         <TextView
+            android:id="@+id/text_view_time"
             android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
             android:textColor="@android:color/black"
@@ -111,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <com.google.android.material.tabs.TabItem
-                android:text="Món"
+                android:text="Món ăn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.tabs.TabLayout>

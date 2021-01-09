@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.callback.OnButtonPaymentClickListener;
 import com.philip.studio.orderfood.fragment.InformationOrderFragment;
@@ -33,7 +35,13 @@ import com.philip.studio.orderfood.model.Restaurant;
 import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import vn.momo.momo_partner.AppMoMoLib;
 
@@ -42,13 +50,15 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
-    TextView txtName, txtAddress;
+    TextView txtName, txtAddress, txtTime;
     ImageView imgChooseAddress;
+    SwitchDateTimeDialogFragment dateTimeDialogFragment;
 
     ArrayList<Cart> arrayList;
     Restaurant restaurant;
     UserUtil userUtil;
     private static final int REQUEST_CODE = 123;
+    private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
     String address;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -62,17 +72,22 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
 
         initView();
 
-        if (userUtil.getUser() != null){
+        if (userUtil.getUser() != null) {
             User user = userUtil.getUser();
             txtName.setText(user.getName());
             String address = user.getAddress();
-            if (!TextUtils.isEmpty(address)){
+            if (!TextUtils.isEmpty(address)) {
                 txtAddress.setText(user.getAddress());
-            }
-            else{
+            } else {
                 txtAddress.setText("Mời chọn địa chỉ nhận hàng");
             }
         }
+
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        String dateTime = new SimpleDateFormat("dd/MM").format(new Date());
+        txtTime.setText("Giao ngay " + time + " - Hôm nay " + dateTime);
+
+        txtTime.setOnClickListener(v -> showDateTimePicker());
 
         toolbar.setNavigationOnClickListener(v -> finish());
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -80,7 +95,7 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         tabLayout.setupWithViewPager(viewPager);
 
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             arrayList = intent.getParcelableArrayListExtra("list");
             restaurant = intent.getParcelableExtra("restaurant");
         }
@@ -95,8 +110,8 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
-            if (requestCode == REQUEST_CODE && data != null){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE && data != null) {
                 address = data.getStringExtra("address");
                 txtAddress.setText(address);
             }
@@ -113,9 +128,7 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         Toast.makeText(this, "Your payment failure :(((", Toast.LENGTH_SHORT).show();
     }
 
-
-
-    class PagerAdapter extends FragmentPagerAdapter{
+    class PagerAdapter extends FragmentPagerAdapter {
 
         public PagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
@@ -124,7 +137,7 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new InformationOrderFragment(restaurant, arrayList);
                 case 1:
@@ -141,13 +154,56 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position){
-                case 0: return "Thông tin";
-                case 1: return "Món";
+            switch (position) {
+                case 0:
+                    return "Thông tin";
+                case 1:
+                    return "Món ăn";
 
             }
             return null;
         }
+    }
+
+    private void showDateTimePicker(){
+        dateTimeDialogFragment = (SwitchDateTimeDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DATETIME_FRAGMENT);
+        if (dateTimeDialogFragment == null){
+            dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance("Chọn thời gian", "Ok", "Cancel");
+        }
+
+        dateTimeDialogFragment.setTimeZone(TimeZone.getDefault());
+        final SimpleDateFormat myDateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+        dateTimeDialogFragment.set24HoursMode(false);
+        dateTimeDialogFragment.setHighlightAMPMSelection(false);
+        dateTimeDialogFragment.setMinimumDateTime(new GregorianCalendar(2021, Calendar.JANUARY, 1).getTime());
+        dateTimeDialogFragment.setMaximumDateTime(new GregorianCalendar(2021, Calendar.DECEMBER, 31).getTime());
+
+        try {
+            dateTimeDialogFragment.setSimpleDateMonthAndDayFormat(new SimpleDateFormat("dd/MM", Locale.getDefault()));
+        } catch (SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException e) {
+            Log.d("error", e.getLocalizedMessage());
+        }
+
+        dateTimeDialogFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
+            @Override
+            public void onPositiveButtonClick(Date date) {
+                txtTime.setText(myDateFormat.format(new Date()));
+            }
+
+            @Override
+            public void onNegativeButtonClick(Date date) {
+                dateTimeDialogFragment.dismiss();
+            }
+
+            @Override
+            public void onNeutralButtonClick(Date date) {
+
+            }
+        });
+
+        dateTimeDialogFragment.startAtCalendarView();
+        dateTimeDialogFragment.setDefaultDateTime(new GregorianCalendar(2021, Calendar.MAY, 1, 3, 14).getTime());
+        dateTimeDialogFragment.show(getSupportFragmentManager(), TAG_DATETIME_FRAGMENT);
     }
 
     private void showDialogPaymentSuccess(Order order) {
@@ -176,12 +232,13 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         dialog.show();
     }
 
-    private void initView(){
+    private void initView() {
         toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         txtName = findViewById(R.id.text_view_name_user);
         txtAddress = findViewById(R.id.text_view_address);
+        txtTime = findViewById(R.id.text_view_time);
         imgChooseAddress = findViewById(R.id.image_view_choose_address);
 
         arrayList = new ArrayList<>();

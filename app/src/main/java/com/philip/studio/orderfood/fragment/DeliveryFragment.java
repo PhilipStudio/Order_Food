@@ -98,8 +98,6 @@ public class DeliveryFragment extends Fragment {
 
                 MenuAdapter menuAdapter = new MenuAdapter(menuArrayList, getContext(), idRes);
                 sRVListMenu.setAdapter(menuAdapter);
-
-
             }
 
             @Override

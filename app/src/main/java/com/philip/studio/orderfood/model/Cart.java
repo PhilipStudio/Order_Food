@@ -10,6 +10,8 @@ public class Cart extends RealmObject implements Parcelable {
     @PrimaryKey
     private String productID;
     private String restaurantID;
+    private String nameRestaurant;
+    private String address;
     private String productName;
     private String productImage;
     private String quantity;
@@ -18,9 +20,11 @@ public class Cart extends RealmObject implements Parcelable {
     public Cart() {
     }
 
-    public Cart(String productID, String restaurantID, String productName, String productImage, String quantity, String price) {
+    public Cart(String productID, String restaurantID, String nameRestaurant, String address, String productName, String productImage, String quantity, String price) {
         this.productID = productID;
         this.restaurantID = restaurantID;
+        this.nameRestaurant = nameRestaurant;
+        this.address = address;
         this.productName = productName;
         this.productImage = productImage;
         this.quantity = quantity;
@@ -30,6 +34,8 @@ public class Cart extends RealmObject implements Parcelable {
     protected Cart(Parcel in) {
         productID = in.readString();
         restaurantID = in.readString();
+        nameRestaurant = in.readString();
+        address = in.readString();
         productName = in.readString();
         productImage = in.readString();
         quantity = in.readString();
@@ -72,6 +78,14 @@ public class Cart extends RealmObject implements Parcelable {
         return productImage;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getNameRestaurant() {
+        return nameRestaurant;
+    }
+
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
@@ -85,6 +99,8 @@ public class Cart extends RealmObject implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(productID);
         dest.writeString(restaurantID);
+        dest.writeString(nameRestaurant);
+        dest.writeString(address);
         dest.writeString(productName);
         dest.writeString(productImage);
         dest.writeString(quantity);

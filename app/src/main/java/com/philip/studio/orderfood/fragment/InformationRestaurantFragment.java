@@ -18,14 +18,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.philip.studio.orderfood.R;
 import com.philip.studio.orderfood.model.Location;
 
-public class InformationFragment extends Fragment implements OnMapReadyCallback {
+public class InformationRestaurantFragment extends Fragment implements OnMapReadyCallback {
 
     String address;
     Location location;
 
     GoogleMap googleMap;
 
-    public InformationFragment(String address, Location location) {
+    public InformationRestaurantFragment(String address, Location location) {
         this.address = address;
         this.location = location;
     }
@@ -33,7 +33,7 @@ public class InformationFragment extends Fragment implements OnMapReadyCallback 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_information, container, false);
+        View view = inflater.inflate(R.layout.fragment_information_restaurant, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.github.abdularis.civ.AvatarImageView;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -52,7 +52,7 @@ public class InformationOrderFragment extends Fragment {
     Button btnConfirmOrder;
     TextView txtNameRes, txtNameUser, txtTotal;
     RadioButton rBPaypal, rBMomo;
-    ImageView imgAvatar;
+    AvatarImageView avatarImageView;
 
     ArrayList<Cart> arrayList;
     Restaurant restaurant;
@@ -90,7 +90,8 @@ public class InformationOrderFragment extends Fragment {
         if (user != null){
             String name = user.getName();
             txtNameUser.setText(name);
-            Glide.with(getContext()).load(user.getAvatar()).into(imgAvatar);
+            avatarImageView.setState(AvatarImageView.SHOW_IMAGE);
+            Glide.with(getContext()).load(user.getAvatar()).into(avatarImageView);
         }
 
         txtNameRes.setText(restaurant.getName());
@@ -124,7 +125,7 @@ public class InformationOrderFragment extends Fragment {
         eventValue.put(MoMoParameterNamePayment.AMOUNT, amount);
         eventValue.put(MoMoParameterNamePayment.DESCRIPTION, "Thanh toán đơn hàng");
         //client Optional
-        eventValue.put(MoMoParameterNamePayment.FEE, "3000");
+        eventValue.put(MoMoParameterNamePayment.FEE, "0");
         eventValue.put(MoMoParameterNamePayment.REQUEST_ID,  UUID.randomUUID().toString());
         eventValue.put(MoMoParameterNamePayment.PARTNER_CODE, "MOMOAETS20201125");
 
@@ -219,7 +220,7 @@ public class InformationOrderFragment extends Fragment {
         txtNameRes = view.findViewById(R.id.text_view_name_restaurant);
         txtNameUser = view.findViewById(R.id.text_view_name_user);
         txtTotal = view.findViewById(R.id.text_view_total);
-        imgAvatar = view.findViewById(R.id.image_view_avatar);
+        avatarImageView = view.findViewById(R.id.avatar_image_view);
 
         userUtil = new UserUtil(getContext());
     }

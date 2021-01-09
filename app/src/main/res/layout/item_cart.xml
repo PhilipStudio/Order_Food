@@ -1,48 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:background="@android:color/white"
-    android:layout_height="wrap_content"
+<com.zerobranch.layout.SwipeLayout
+    app:swipeDirection="left"
+    app:rightItem="@id/item_delete"
+    app:draggedItem="@id/drag_item"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:padding="10dp"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:contentDescription="@string/app_name"
-        android:id="@+id/item_food_image"
-        android:layout_height="80dp"
+        android:padding="20dp"
+        android:layout_gravity="end"
+        android:background="#F48663"
+        android:id="@+id/item_delete"
+        android:src="@drawable/ic_baseline_delete_white"
         android:layout_width="80dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="match_parent"/>
 
     <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
+        android:id="@+id/drag_item"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/item_food_name"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+        <ImageView
+            android:contentDescription="@string/app_name"
+            android:id="@+id/item_food_image"
+            android:layout_height="80dp"
+            android:layout_width="80dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:maxLines="1"
+                android:id="@+id/item_food_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
 
-        <TextView
-            android:id="@+id/item_total"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/price"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/item_total"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/price"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
-        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-            android:id="@+id/item_number_button"
-            android:layout_gravity="bottom|end"
-            android:layout_height="30dp"
-            android:layout_width="100dp"
-            app:finalNumber="20"
-            app:initialNumber="1" />
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/item_number_button"
+                android:layout_gravity="bottom|end"
+                android:layout_height="30dp"
+                android:layout_width="100dp"
+                app:finalNumber="20"
+                app:initialNumber="1" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.zerobranch.layout.SwipeLayout>

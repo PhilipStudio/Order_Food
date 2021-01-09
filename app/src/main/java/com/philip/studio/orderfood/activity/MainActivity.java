@@ -13,7 +13,6 @@ import com.philip.studio.orderfood.callback.DirectionFinderListener;
 import com.philip.studio.orderfood.callback.OnItemCategoryClickListener;
 import com.philip.studio.orderfood.fragment.HomeFragment;
 import com.philip.studio.orderfood.fragment.TrackingOrderFragment;
-import com.philip.studio.orderfood.fragment.LikedFragment;
 import com.philip.studio.orderfood.fragment.UserFragment;
 import com.philip.studio.orderfood.model.Route;
 import com.philip.studio.orderfood.model.User;
@@ -56,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnItemCategoryCli
                 break;
             case R.id.order:
                 fragment = new TrackingOrderFragment();
-                break;
-            case R.id.liked:
-                fragment = new LikedFragment();
                 break;
             case R.id.me:
                 fragment = new UserFragment();
