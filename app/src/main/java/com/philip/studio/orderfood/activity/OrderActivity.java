@@ -33,6 +33,7 @@ import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Order;
 import com.philip.studio.orderfood.model.Restaurant;
 import com.philip.studio.orderfood.model.User;
+import com.philip.studio.orderfood.util.LocationUtil;
 import com.philip.studio.orderfood.util.UserUtil;
 
 import java.text.SimpleDateFormat;
@@ -57,6 +58,7 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
     ArrayList<Cart> arrayList;
     Restaurant restaurant;
     UserUtil userUtil;
+    LocationUtil locationUtil;
     private static final int REQUEST_CODE = 123;
     private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
     String address;
@@ -75,12 +77,13 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
         if (userUtil.getUser() != null) {
             User user = userUtil.getUser();
             txtName.setText(user.getName());
-            String address = user.getAddress();
-            if (!TextUtils.isEmpty(address)) {
-                txtAddress.setText(user.getAddress());
-            } else {
-                txtAddress.setText("Mời chọn địa chỉ nhận hàng");
-            }
+        }
+
+        address = locationUtil.getNameUserLocation();
+        if (!TextUtils.isEmpty(address)) {
+            txtAddress.setText(address);
+        } else {
+            txtAddress.setText("Mời chọn địa chỉ nhận hàng");
         }
 
         String time = new SimpleDateFormat("HH:mm").format(new Date());
@@ -243,5 +246,6 @@ public class OrderActivity extends AppCompatActivity implements OnButtonPaymentC
 
         arrayList = new ArrayList<>();
         userUtil = new UserUtil(this);
+        locationUtil = new LocationUtil(this);
     }
 }

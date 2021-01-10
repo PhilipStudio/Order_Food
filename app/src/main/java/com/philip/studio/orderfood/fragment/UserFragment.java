@@ -92,7 +92,7 @@ public class UserFragment extends Fragment {
         StorageReference imageFilePath = stoRef.child(uri.getLastPathSegment());
         imageFilePath.putFile(uri).addOnSuccessListener(taskSnapshot -> imageFilePath.getDownloadUrl().addOnSuccessListener(uri1 -> {
             String link = uri1.toString();
-            dataRef.child(userUtil.getUser().getPhoneNumber()).child("avatar").setValue(link);
+            dataRef.child(userUtil.getUser().getEmail()).child("avatar").setValue(link);
         }));
     }
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,9 +18,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,6 +49,8 @@ import com.philip.studio.orderfood.model.Restaurant;
 import com.philip.studio.orderfood.model.User;
 import com.philip.studio.orderfood.util.UserUtil;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -67,9 +69,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
     TabLayout tabLayout;
     ViewPager viewPager;
-    ImageView imgLogo, imgEvaluate;
+    ImageView imgLogo, imgEvaluate, imgMenu;
     ImageBadgeView imageBadgeView;
-    AutoCompleteTextView completeTextView;
+
 
     Restaurant restaurant;
     String time, total;
@@ -86,6 +88,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
         Realm.init(this);
+
         initView();
 
         Intent intent = getIntent();
@@ -111,7 +114,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             txtPriceRange.setText(priceRange);
         }
 
-        searchFoodFromMenu(restaurant.getIdRes());
 
         User user = userUtil.getUser();
         imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
@@ -151,9 +153,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
         imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
+
+        imgMenu.setOnClickListener(v -> showListMenu(restaurant.getIdRes(), imgMenu));
     }
 
-    private void searchFoodFromMenu(String idRes) {
+    private void showListMenu(String idRes, View view) {
         DatabaseReference dataRef = firebaseDatabase.getReference().child("Menu");
         dataRef.child(idRes).addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,17 +165,33 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 ArrayList<String> listName = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Menu menu = dataSnapshot.getValue(Menu.class);
-                    listName.add(menu.getName());
+                    listName.add(menu.getName() + " (" + menu.getFoods().size() + ")");
                 }
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RestaurantDetailActivity.this, android.R.layout.simple_list_item_1, listName);
-                completeTextView.setAdapter(arrayAdapter);
-                completeTextView.setThreshold(1);
+                createPopupMenu(RestaurantDetailActivity.this, view, listName);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+    private void createPopupMenu(Context context, View anchorView, ArrayList<String> arrayList) {
+        PopupMenu popupMenu = new PopupMenu(context, anchorView);
+        android.view.Menu menu = popupMenu.getMenu();
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            menu.add(i, i, i, arrayList.get(i));
+        }
+        popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Subscribe
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
             }
         });
     }
@@ -273,8 +293,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Comment comment = snapshot.getValue(Comment.class);
-                if (comment != null){
-                    ratingBar.setRating((float)comment.getStar());
+                if (comment != null) {
+                    ratingBar.setRating((float) comment.getStar());
                 }
             }
 
@@ -343,7 +363,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     class PagerAdapter extends FragmentPagerAdapter {
 
-
         public PagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
         }
@@ -409,7 +428,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         txtPriceRange = findViewById(R.id.text_view_price_range);
         imageBadgeView = findViewById(R.id.image_badge_view_shopping_cart);
         imgEvaluate = findViewById(R.id.image_view_evaluate);
-        completeTextView = findViewById(R.id.auto_complete_text_view);
+        imgMenu = findViewById(R.id.image_view_menu);
 
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

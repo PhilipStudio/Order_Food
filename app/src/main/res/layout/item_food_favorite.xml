@@ -44,7 +44,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="10dp"
             app:finalNumber="20"
-            app:initialNumber="1" />
+            app:initialNumber="0" />
 
     </LinearLayout>
 

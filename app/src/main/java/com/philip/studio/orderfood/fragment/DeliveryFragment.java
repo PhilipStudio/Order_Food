@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DeliveryFragment extends Fragment {
+public class DeliveryFragment extends Fragment{
 
     ShimmerRecyclerViewX sRVListMenu;
     TextView txtBusinessHours, txtTotal, txtStatus;
@@ -67,6 +67,10 @@ public class DeliveryFragment extends Fragment {
             if (start < current && current < end){
                 txtStatus.setTextColor(Color.GREEN);
                 txtStatus.setText("Đang mở cửa");
+            }
+            else{
+                txtStatus.setTextColor(Color.RED);
+                txtStatus.setText("Đóng cửa");
             }
         } catch (ParseException e) {
             e.printStackTrace();

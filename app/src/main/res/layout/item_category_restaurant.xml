@@ -10,23 +10,53 @@
     android:padding="10dp">
 
     <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/item_logo"
+        <FrameLayout
+            android:layout_margin="5dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background" />
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/item_logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background" />
+
+            <LinearLayout
+                android:id="@+id/item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:drawable/screen_background_dark_transparent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đóng cửa"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/item_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hẹn giao vào lúc 08:00"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+        </FrameLayout>
 
         <TextView
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_baseline_thumb_up"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:id="@+id/item_favorite_restaurant"
-            android:padding="3dp"
+            android:padding="2dp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="#ff00"
@@ -34,28 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:id="@+id/item_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:drawable/screen_background_dark_transparent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đóng cửa"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/item_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hẹn giao vào lúc 08:00"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
 
     </FrameLayout>
 

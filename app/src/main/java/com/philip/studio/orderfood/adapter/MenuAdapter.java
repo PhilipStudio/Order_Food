@@ -9,12 +9,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mikelau.views.shimmer.ShimmerRecyclerViewX;
 import com.philip.studio.orderfood.R;
+import com.philip.studio.orderfood.event.SearchMenuEvent;
 import com.philip.studio.orderfood.model.Cart;
 import com.philip.studio.orderfood.model.Food;
 import com.philip.studio.orderfood.model.Menu;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -92,6 +97,7 @@ public class MenuAdapter extends ShimmerRecyclerViewX.Adapter<MenuAdapter.ViewHo
                 }
             });
         }
+        
     }
 
     @Override

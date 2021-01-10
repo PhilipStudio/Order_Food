@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.github.abdularis.civ.AvatarImageView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -64,6 +66,9 @@ public class InformationOrderFragment extends Fragment {
     boolean isPaymentMOMO = false;
     UserUtil userUtil;
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference dataRef;
+
     private static PayPalConfiguration palConfiguration = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(ConfigPayPal.PAYPAL_CLIENT_ID);
@@ -87,7 +92,7 @@ public class InformationOrderFragment extends Fragment {
         }
 
         User user = userUtil.getUser();
-        if (user != null){
+        if (user != null) {
             String name = user.getName();
             txtNameUser.setText(name);
             avatarImageView.setState(AvatarImageView.SHOW_IMAGE);
@@ -126,7 +131,7 @@ public class InformationOrderFragment extends Fragment {
         eventValue.put(MoMoParameterNamePayment.DESCRIPTION, "Thanh toán đơn hàng");
         //client Optional
         eventValue.put(MoMoParameterNamePayment.FEE, "0");
-        eventValue.put(MoMoParameterNamePayment.REQUEST_ID,  UUID.randomUUID().toString());
+        eventValue.put(MoMoParameterNamePayment.REQUEST_ID, UUID.randomUUID().toString());
         eventValue.put(MoMoParameterNamePayment.PARTNER_CODE, "MOMOAETS20201125");
 
         JSONObject objExtraData = new JSONObject();
@@ -165,28 +170,25 @@ public class InformationOrderFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == getActivity().RESULT_OK && requestCode == PAYPAL_REQUEST_CODE && data != null) {
+        if (resultCode == Activity.RESULT_OK && requestCode == PAYPAL_REQUEST_CODE && data != null) {
             confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-            if (confirmation != null) {
-                try {
-                    String paymentDetails = confirmation.toJSONObject().toString(4);
-                    JSONObject jsonObject = new JSONObject(paymentDetails);
-                    String paymentId = jsonObject.getString("id");
-                    String idOrder = String.valueOf(System.currentTimeMillis());
-                    String phone = userUtil.getUser().getPhoneNumber();
-                    String name = userUtil.getUser().getName();
-                    String address = restaurant.getAddress();
-                    String status = jsonObject.getString("state");
+            try {
+                String paymentDetails = confirmation.toJSONObject().toString(4);
+                JSONObject jsonObject = new JSONObject(paymentDetails);
+                String paymentId = jsonObject.getString("id");
+                String idOrder = String.valueOf(System.currentTimeMillis());
+                String phone = userUtil.getUser().getPhoneNumber();
+                String name = userUtil.getUser().getName();
+                String address = restaurant.getAddress();
+                String status = jsonObject.getString("state");
 
-                    order = new Order(idOrder, paymentId, phone, name, address, String.valueOf(totalOrder), arrayList, status);
-                    Toast.makeText(getContext(), paymentId, Toast.LENGTH_SHORT).show();
-                    listener.onPaymentSuccess(order);
-                } catch (Exception e) {
-                    Log.d("error", e.getLocalizedMessage());
-                }
+//                order = new Order(idOrder, paymentId, phone, name, address, String.valueOf(totalOrder), arrayList, status);
+//                dataRef.child(idOrder).setValue(order);
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Payment Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(getContext(), "Result cancel", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Payment Paypal canceled", Toast.LENGTH_SHORT).show();
         } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
             Toast.makeText(getContext(), "Invalid", Toast.LENGTH_SHORT).show();
         }
@@ -223,5 +225,8 @@ public class InformationOrderFragment extends Fragment {
         avatarImageView = view.findViewById(R.id.avatar_image_view);
 
         userUtil = new UserUtil(getContext());
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dataRef = firebaseDatabase.getReference().child("Order");
     }
 }

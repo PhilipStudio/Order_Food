@@ -41,7 +41,7 @@
 
             <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                 app:finalNumber="20"
-                app:initialNumber="1"
+                app:initialNumber="0"
                 android:id="@+id/item_number_button"
                 android:background="@drawable/custom_button_add"
                 android:src="@drawable/ic_baseline_add"
