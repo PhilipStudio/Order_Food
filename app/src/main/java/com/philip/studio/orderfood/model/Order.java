@@ -66,18 +66,4 @@ public class Order {
     public String getStatus() {
         return status;
     }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "idOrder='" + idOrder + '\'' +
-                ", paymentId='" + paymentId + '\'' +
-                ", phone='" + phone + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", total='" + total + '\'' +
-                ", arrayList=" + arrayList +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

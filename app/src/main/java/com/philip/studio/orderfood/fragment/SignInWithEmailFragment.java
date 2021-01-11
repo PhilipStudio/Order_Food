@@ -53,7 +53,7 @@ public class SignInWithEmailFragment extends Fragment {
             String password = inputEditTextPassword.getText().toString();
 
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                Toast.makeText(getContext(), "Data is null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Bạn chưa nhập dữ liệu", Toast.LENGTH_SHORT).show();
             } else {
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener(authResult -> {
@@ -62,7 +62,7 @@ public class SignInWithEmailFragment extends Fragment {
                                 getDataUser(idUser);
                             }
                         })
-                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show());
+                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show());
             }
         });
 
@@ -93,7 +93,7 @@ public class SignInWithEmailFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,7 +107,7 @@ public class SignInWithEmailFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        dataUserRef = firebaseDatabase.getReference().child("User");
+        dataUserRef = firebaseDatabase.getReference().child("Account").child("User");
 
         util = new UserUtil(getContext());
     }

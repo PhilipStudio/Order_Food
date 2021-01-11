@@ -3,9 +3,12 @@ package com.philip.studio.orderfood.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+@IgnoreExtraProperties
 public class Cart extends RealmObject implements Parcelable {
     @PrimaryKey
     private String productID;

@@ -41,7 +41,7 @@ public class HistoryFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         rVListOrder.setLayoutManager(layoutManager);
 
-        dataOrderRef.orderByChild("phone").equalTo("0385035105").addValueEventListener(new ValueEventListener() {
+        dataOrderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Order> arrayList = new ArrayList<>();

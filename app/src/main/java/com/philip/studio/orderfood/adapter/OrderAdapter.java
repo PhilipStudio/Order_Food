@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.txtNameOrder.setText(arrayList.get(position).getName());
         holder.txtPhoneNumberOrder.setText(arrayList.get(position).getPhone());
         holder.txtAddressOrder.setText(arrayList.get(position).getAddress());
-        holder.txtStatusOrder.setText(convertCodeToStatus(arrayList.get(position).getStatus()));
+        holder.txtStatusOrder.setText(arrayList.get(position).getStatus());
     }
 
     @Override
@@ -57,16 +57,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             txtNameOrder = itemView.findViewById(R.id.item_name_order);
             txtPhoneNumberOrder = itemView.findViewById(R.id.item_phone_number_order);
             txtStatusOrder = itemView.findViewById(R.id.item_status_order);
-        }
-    }
-
-    private String convertCodeToStatus(String status) {
-        if (status.equals("0"))
-            return "Placed";
-        else if (status.equals("1")) {
-            return "Shipping";
-        } else {
-            return "Shipped";
         }
     }
 }

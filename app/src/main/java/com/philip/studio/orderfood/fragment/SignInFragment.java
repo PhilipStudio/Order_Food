@@ -101,7 +101,7 @@ public class SignInFragment extends Fragment {
             phoneNumber = materialEdtPhone.getText().toString();
             String data = "+84" + phoneNumber;
             if (TextUtils.isEmpty(phoneNumber)) {
-                materialEdtPhone.setError("Phone number is required");
+                materialEdtPhone.setError("Số điện thoại là bắt buộc");
                 materialEdtPhone.requestFocus();
             } else {
                 if (isPhoneNumber(data)) {
@@ -110,7 +110,7 @@ public class SignInFragment extends Fragment {
                             .beginTransaction().replace(R.id.frame_layout_container, new VerifyPhoneFragment(data))
                             .commit();
                 } else {
-                    materialEdtPhone.setError("This isn't phone number");
+                    materialEdtPhone.setError("Đây không phải là số điện thoại");
                     materialEdtPhone.requestFocus();
                 }
             }
@@ -163,6 +163,6 @@ public class SignInFragment extends Fragment {
         imgSignInEmail = view.findViewById(R.id.image_view_sign_in_with_email);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        dataUserRef = firebaseDatabase.getReference().child("User");
+        dataUserRef = firebaseDatabase.getReference().child("Account").child("User");
     }
 }

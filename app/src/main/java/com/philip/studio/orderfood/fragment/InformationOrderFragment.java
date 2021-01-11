@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.github.abdularis.civ.AvatarImageView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -46,6 +47,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import vn.momo.momo_partner.AppMoMoLib;
 import vn.momo.momo_partner.MoMoParameterNamePayment;
 
@@ -173,18 +176,12 @@ public class InformationOrderFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK && requestCode == PAYPAL_REQUEST_CODE && data != null) {
             confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
             try {
-                String paymentDetails = confirmation.toJSONObject().toString(4);
-                JSONObject jsonObject = new JSONObject(paymentDetails);
-                String paymentId = jsonObject.getString("id");
-                String idOrder = String.valueOf(System.currentTimeMillis());
-                String phone = userUtil.getUser().getPhoneNumber();
-                String name = userUtil.getUser().getName();
-                String address = restaurant.getAddress();
-                String status = jsonObject.getString("state");
-
-//                order = new Order(idOrder, paymentId, phone, name, address, String.valueOf(totalOrder), arrayList, status);
-//                dataRef.child(idOrder).setValue(order);
-            } catch (Exception e) {
+                if (confirmation != null) {
+                    String paymentDetails = confirmation.toJSONObject().toString(4);
+                    JSONObject jsonObject = new JSONObject(paymentDetails).getJSONObject("response");
+                    showOrderDetails(jsonObject);
+                }
+            } catch (JSONException e) {
                 Toast.makeText(getContext(), "Payment Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -199,6 +196,30 @@ public class InformationOrderFragment extends Fragment {
         super.onAttach(context);
 
         listener = (OnButtonPaymentClickListener) context;
+    }
+
+    private void showOrderDetails(JSONObject jsonObject) throws JSONException {
+        String paymentId = jsonObject.getString("id");
+        String idOrder = String.valueOf(System.currentTimeMillis());
+        String phone = userUtil.getUser().getPhoneNumber();
+        String name = userUtil.getUser().getName();
+        String address = restaurant.getAddress();
+        String status = jsonObject.getString("state");
+
+        order = new Order(idOrder, paymentId, phone, name, address, String.valueOf(totalOrder), arrayList, status);
+        dataRef.child(idOrder).setValue(order);
+
+        deleteListCart(arrayList);
+    }
+
+    private void deleteListCart(ArrayList<Cart> carts){
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(realm1 -> {
+            for (int i=0; i<carts.size(); i++){
+                Cart cart = realm1.where(Cart.class).contains("productID", carts.get(i).getProductID()).findFirst();
+                cart.deleteFromRealm();
+            }
+        });
     }
 
     private String formatTextTotalOrder(double total) {

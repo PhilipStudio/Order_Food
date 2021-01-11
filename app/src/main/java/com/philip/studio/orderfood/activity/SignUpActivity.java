@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
-        dataUserRef = firebaseDatabase.getReference().child("User");
+        dataUserRef = firebaseDatabase.getReference().child("Account").child("User");
         userUtil = new UserUtil(this);
     }
 }
