@@ -37,6 +37,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +58,11 @@ public class FoodDetailActivity extends AppCompatActivity {
                     double price = food.getPrice();
                     String formattedPrice = formatter.format(price);
                     txtPrice.setText(formattedPrice + "đ");
-                    if (food.getLike() >= 1000){
-                        txtLike.setText("1k");
+                    if (food.getLike() >= 100) {
+                        txtLike.setText("100+");
+                    } else {
+                        txtLike.setText(String.valueOf(food.getLike()));
                     }
-                    else{
-                        txtLike.setText(String.valueOf(food.getLike()));                    }
                 }
                 setUpRecyclerViewListSuggestion(arrayList);
             }
@@ -69,13 +70,16 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         fabFavorite.setOnClickListener(v -> {
             dem++;
-            if (dem % 2 != 0){
+            if (dem % 2 != 0) {
                 fabFavorite.setImageResource(R.drawable.ic_baseline_favorite);
-            }
-            else{
+            } else {
                 fabFavorite.setImageResource(R.drawable.ic_baseline_favorite_border);
             }
         });
+    }
+
+    private void favoriteFoodInMenu() {
+        dataRef = firebaseDatabase.getReference().child("Menu");
     }
 
     private void setUpRecyclerViewListSuggestion(ArrayList<Food> arrayList) {
@@ -94,12 +98,16 @@ public class FoodDetailActivity extends AppCompatActivity {
                 double price = data.getPrice();
                 String formattedPrice = formatter.format(price);
                 txtPrice.setText(formattedPrice + "đ");
-                txtLike.setText(String.valueOf(data.getLike()));
+                if (food.getLike() >= 100) {
+                    txtLike.setText("100+");
+                } else {
+                    txtLike.setText(String.valueOf(food.getLike()));
+                }
             }
         });
     }
 
-    public void onBack(View view){
+    public void onBack(View view) {
         finish();
     }
 

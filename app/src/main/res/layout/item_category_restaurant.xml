@@ -3,149 +3,165 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@android:color/white"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <FrameLayout
-            android:layout_margin="5dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/item_logo"
+            <FrameLayout
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
-                android:src="@drawable/background" />
+                android:layout_margin="5dp">
 
-            <LinearLayout
-                android:id="@+id/item_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:drawable/screen_background_dark_transparent"
-                android:gravity="center"
-                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/item_logo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đóng cửa"
-                    android:textColor="@android:color/white" />
+                <LinearLayout
+                    android:id="@+id/item_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:drawable/screen_background_dark_transparent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/item_notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hẹn giao vào lúc 08:00"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đóng cửa"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/item_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hẹn giao vào lúc 08:00"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/item_favorite_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff00"
+                android:drawableStart="@drawable/ic_baseline_thumb_up"
+                android:drawablePadding="5dp"
+                android:padding="2dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
 
         </FrameLayout>
-
-        <TextView
-            android:drawablePadding="5dp"
-            android:drawableStart="@drawable/ic_baseline_thumb_up"
-            android:textSize="10sp"
-            android:id="@+id/item_favorite_restaurant"
-            android:padding="2dp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:background="#ff00"
-            android:text="@string/favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_name_restaurant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/item_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/address"
-            android:textColor="#BFBCBC" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:drawablePadding="6dp"
+                android:drawableLeft="@drawable/icon_restaurant"
+                android:id="@+id/item_name_restaurant"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/business_hours"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-
-                    android:id="@+id/item_business_hours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/_8_30"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/address"
+                android:textColor="#BFBCBC" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/item_stars"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/business_hours"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+
+                        android:id="@+id/item_business_hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/_8_30"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/star"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    app:drawableEndCompat="@drawable/ic_baseline_star" />
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:layout_marginStart="20dp"
-                    android:textSize="10sp"
-                    android:padding="5dp"
-                    android:background="@drawable/custom_text_view"
-                    android:textColor="#EF5959"
-                    android:id="@+id/item_free"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Giảm giá 10%" />
+                    <TextView
+                        android:id="@+id/item_stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/star"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        app:drawableEndCompat="@drawable/ic_baseline_star" />
+
+                    <TextView
+                        android:id="@+id/item_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/custom_text_view"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Giảm giá 10%"
+                        android:textColor="#EF5959"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
 </LinearLayout>

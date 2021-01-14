@@ -25,8 +25,9 @@
     <string name="add_address_your_house">Thêm địa chỉ công ty của bạn</string>
     <string name="add_address_your_company">Thêm địa chỉ nhà của bạn</string>
     <string name="restaurant">Nhà hàng</string>
-    <string name="book">Đặt bàn</string>
+    <string name="book">Đặt Bàn</string>
     <string name="free_ship">Free ship</string>
+    <string name="restaurant_favorite">Quán Yêu Thích</string>
     <string name="favorite">Yêu thích</string>
     <string name="drink">Thức uống</string>p
     <string name="fast_food">Thức ăn nhanh</string>

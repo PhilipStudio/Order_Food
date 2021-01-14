@@ -49,6 +49,13 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Vi
         double price = arrayList.get(position).getPrice();
         String formattedPrice = formatter.format(price);
         holder.txtFoodPrice.setText(formattedPrice + "đ");
+        double favorite = arrayList.get(position).getLike();
+        if (favorite > 100){
+            holder.txtFoodLike.setText("100+");
+        }
+        else{
+            holder.txtFoodLike.setText(String.valueOf(arrayList.get(position).getLike()));
+        }
     }
 
     @Override

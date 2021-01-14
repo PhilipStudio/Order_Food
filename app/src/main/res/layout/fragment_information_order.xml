@@ -62,10 +62,56 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:text="Phí vận chuyển: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/black"
+            android:text="10.000 đồng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@android:color/black"
+            android:text="Tổng: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/black"
+            android:text="100.000 đồng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
     <TextView
         android:textColor="@android:color/black"
         android:text="@string/payment_method"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -85,7 +131,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/custom_button_payment"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="Paypal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -99,7 +145,7 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/custom_button_payment"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="MOMO"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -111,7 +157,10 @@
         android:background="@drawable/custom_button"
         android:textAllCaps="false"
         android:text="@string/content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

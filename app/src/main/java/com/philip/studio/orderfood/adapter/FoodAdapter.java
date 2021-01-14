@@ -60,6 +60,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
+        double favorite = arrayList.get(position).getLike();
+        if (favorite > 100){
+            holder.txtLike.setText("100+");
+        }
+        else{
+            holder.txtLike.setText(String.valueOf(arrayList.get(position).getLike()));
+        }
         Glide.with(context).load(arrayList.get(position).getImage()).into(holder.imgImage);
         holder.txtName.setText(arrayList.get(position).getName());
         NumberFormat formatter = new DecimalFormat("#,###");
@@ -102,7 +109,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public class FoodViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtName, txtPrice;
+        TextView txtName, txtPrice, txtLike;
         ImageView imgImage;
         ElegantNumberButton numberButton;
 
@@ -112,6 +119,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             txtName = itemView.findViewById(R.id.item_food_name);
             imgImage = itemView.findViewById(R.id.item_food_image);
             txtPrice = itemView.findViewById(R.id.item_food_price);
+            txtLike = itemView.findViewById(R.id.item_food_like);
             numberButton = itemView.findViewById(R.id.item_number_button);
 
             itemView.setOnClickListener(v -> {

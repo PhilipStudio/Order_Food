@@ -110,16 +110,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        sRVListCategory.showShimmerAdapter();
-        sRVListCategory.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        sRVListCategory.setLayoutManager(layoutManager);
-
-        try {
-            loadMenu();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        setUpRecyclerViewListMenu();
 
         txtAddress.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddressActivity.class);
@@ -130,6 +121,26 @@ public class HomeFragment extends Fragment {
         btnFavorite.setOnClickListener(listener);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setUpRecyclerViewListMenu();
+    }
+
+    private void setUpRecyclerViewListMenu(){
+        sRVListCategory.showShimmerAdapter();
+        sRVListCategory.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        sRVListCategory.setLayoutManager(layoutManager);
+
+        try {
+            loadMenu();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUpSpinner() {

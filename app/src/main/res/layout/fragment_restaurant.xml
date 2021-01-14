@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:padding="10dp"
                 android:id="@+id/image_view_back"
                 android:src="@drawable/ic_baseline_arrow_back"
                 android:layout_width="wrap_content"
@@ -26,20 +27,23 @@
                 android:id="@+id/text_view_name_category"
                 android:textColor="@android:color/black"
                 android:textAlignment="center"
-                android:textStyle="bold"
-                android:padding="10dp"
                 android:text="@string/restaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:background="@color/colorShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabTextAppearance="@style/MyCustomTextAppearance"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
         <com.google.android.material.tabs.TabItem
             android:text="@string/near_by_you"
             android:layout_width="wrap_content"
@@ -53,6 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </com.google.android.material.tabs.TabLayout>
+
+    <View
+        android:background="@color/colorShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
 
     <com.mikelau.views.shimmer.ShimmerRecyclerViewX
         android:id="@+id/shimmer_recycler_view_list_restaurant"

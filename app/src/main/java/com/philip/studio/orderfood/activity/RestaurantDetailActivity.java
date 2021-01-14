@@ -78,7 +78,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     UserUtil userUtil;
     Realm realm;
     RealmResults<Cart> realmResults;
-    int stars = 0;
+    int stars = 0, dem = 0;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dataCommentRef, dataResRef;
@@ -155,6 +155,19 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         imgEvaluate.setOnClickListener(v -> showDialogFavorite(restaurant, user));
 
         imgMenu.setOnClickListener(v -> showListMenu(restaurant.getIdRes(), imgMenu));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        imageBadgeView.setBadgeValue(dem);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        imageBadgeView.setBadgeValue(dem);
     }
 
     private void showListMenu(String idRes, View view) {
